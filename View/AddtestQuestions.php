@@ -46,7 +46,7 @@ jQuery(function($) {
 <p><label>Question</label></p>
 <textarea  name="name" class="Que" rows="10" cols="70"></textarea> <br>
 
-<button type="button" id="add-button" class="btn">Add Element</button>
+<button type="button" id="add-button" class="btn">Add Option</button>
 <div id="traces">
   <div class="trace">
     

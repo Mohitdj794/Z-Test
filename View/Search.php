@@ -11,24 +11,21 @@
 <body>
 
 <div class="topnav" id="myTopnav">
+<a href="#" class="active">Z-TEST</a>
 <a href="#about">Home</a>
-  <a href="firstOut.php" class="active">My Test</a>
+  
   
   <a class="l" href="#contact">Log Out</a>
 
-  
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i class="fa fa-bars"></i>
-  </a>
 </div>
 
 <div class="box">
  
 
 <div class="form-div-wrap">
-<form action='Search.php' method="post">
-<button id='bton' style='background-color:gray'>SEARCH</button>
-   <input type="text" value="<?= $_GET["search"] ?>" name="search" required> 
+<form action='ViewCourse.php' method="post">
+   <input type="text" value="<?= $_GET["search"] ?>" name="search" > 
+   <button id='bton' style='background-color:gray'>X</button>
 </form>
 
 <form action='Insert_test.php' class="button-form">

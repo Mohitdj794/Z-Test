@@ -44,17 +44,16 @@
             }
 
 
-            public function CreatCourse($name,$time){
+            public function CreatCourse($submit,$name,$time){
+                if(isset($submit)){
                 $sql="INSERT INTO Test_Title(TestTitle ,TestDuration)VALUES('{$name}','{$time}')";
-                if($this->con->query($sql)===true){
+                if($this->con->query($sql)){
                      
                         header('Location:/Php-Project/View/ViewCourse.php');
                 }
-                else{
-                    echo $this->con->error;
-                 }
-
+                    echo "This Course is Alredy entered";
              }
+            }
 
 
              public function  AddTest($submit,$name,$id,$option,$Ans){
@@ -107,7 +106,7 @@
                        $str="";
                        
                        foreach ($var as $key => $value) {
-                           $str.= "<input type='radio' id='html' name='fav_language'>".$value."<br>";
+                           $str.= "* ".$value."<br>";
                        }
            
                        
@@ -188,7 +187,7 @@
                     }
             }
              
-            
+
             public function SearchCourse($search){
                 $sql="SELECT * FROM Test_Title WHERE TestTitle LIKE '{$search}%' ";
                 $result=$this->con->query($sql);
