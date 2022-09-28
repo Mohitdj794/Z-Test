@@ -46,15 +46,15 @@ class Query extends Connection
     }
 
 
-    public function CreatCourse($name, $time)
-    {
-        $sql = "INSERT INTO Test_Title(TestTitle ,TestDuration)VALUES('{$name}','{$time}')";
-        if ($this->con->query($sql) === true) {
-
-            header('Location:/Php-Project/View/ViewCourse.php');
-        } else {
-            echo $this->con->error;
+    public function CreatCourse($submit,$name,$time){
+        if(isset($submit)){
+        $sql="INSERT INTO Test_Title(TestTitle ,TestDuration)VALUES('{$name}','{$time}')";
+        if($this->con->query($sql)){
+             
+                header('Location:/Php-Project/View/ViewCourse.php');
         }
+            echo "This Course is Alredy entered";
+     }
     }
 
 
@@ -106,7 +106,7 @@ class Query extends Connection
                 $str = "";
 
                 foreach ($var as $key => $value) {
-                    $str .= "<input type='radio' id='html' name='fav_language'>" . $value . "<br>";
+                    $str .= " ~> " . $value . "<br>";
                 }
 
 
@@ -246,4 +246,15 @@ class Query extends Connection
             else $result = [];
             return $result;
         }
+        
+        public function fetchDataFromExamDetail()
+        {
+            $sql = "Select Test_Title.TestTitle,Test_Title.TestDuration,Test_Question.Question_id,Test_Question.Question,Test_Result.Options,Test_Result.Answer FROM Test_Title INNER JOIN Test_Question ON Test_Title.Test_id=Test_Question.Test_id INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Title.Test_id=6";
+            $stmt = $this->con->query($sql);
+            if ($stmt->num_rows > 0 )
+            $result = $stmt->fetch_all(MYSQLI_ASSOC);
+            else $result = [];
+            return $result;
+        }
+        
 }

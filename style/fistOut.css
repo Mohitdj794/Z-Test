@@ -22,16 +22,12 @@ body {
     font-size: 19px;
   }
   
-  .topnav a:hover {
+  .topnav .home:hover {
     background-color:  #04AA6D;
     color: black;
   }
   
-  .topnav a.active:hover {
-    background-color:#ddd;
-    color:black;
-  }
-  
+ 
   .topnav .icon {
     display: none;
   }
