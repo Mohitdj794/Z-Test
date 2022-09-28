@@ -1,0 +1,170 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgb(229, 232, 232);
+}
+
+.container{
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container .inner-container{
+    width: 90%;
+    height: 90%;
+    box-shadow: 0px 0px 1px 1px black;
+    padding-top: 40px;
+    position: relative;
+}
+.container .time {
+    font-size: 30px;
+    padding: 20px;
+}
+.container h3{
+    font-size: 30px;
+    padding-left: 20px;
+}
+.container h3::after{
+    content: '  Assessment';
+}
+.container form{
+    margin-left: 30px;  
+}
+.container p{
+    display: inline;
+    font-size: 27px;
+    font-weight: 500;
+    margin-left: 20px;  
+}
+.container p::first-letter{
+    text-transform: uppercase;
+}
+.question {
+    margin-left: 30px;
+}
+.question input{
+    cursor: pointer;
+    margin-left: 20px;
+    margin-top: 30px;  
+    color: rgba(155, 155, 155, 0.478); 
+}
+input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -4px;
+    left: -1px;
+    position: relative;
+    background-color: #ffffff;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid rgb(0, 0, 0);
+}
+
+input[type='radio']:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -4px;
+    left: -1px;
+    position: relative;
+    background-color: #646464;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid rgb(0, 0, 0);
+}
+
+.question {
+    margin-left: 20px;
+    margin-top: 40px;
+}
+.question span{
+    font-size: 27px;
+}
+.question label{
+    margin-left: 10px;
+    font-size: 30px;
+}
+.container .button{
+    float: left;
+    margin-top: 30px;
+    padding: 0 30px;
+}
+.container .button button{
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 10px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+.container .button button:hover {
+    box-shadow: 1px 1px 2px 1px black;
+}
+.container .button button i{
+    font-size: 15px;
+}
+#submit{
+    color: whitesmoke!important;
+    position: absolute;
+    bottom: 40%;
+    right: 10%;
+    padding: 20px 30px;
+    background-color: rgb(79, 79, 79);
+    font-size: 18px;
+    font-weight: 400;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 30;
+}
+*::first-letter{
+    text-transform: uppercase;
+}
+
+/* show result */
+
+.showResult{
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.showResult .showResultContainer{
+    width: 700px;
+    height: auto;
+    padding: 60px;
+    box-shadow: 0px 0px 1px 1px black;
+    background-color: aquamarine;
+}
+.showResult .showResultContainer h3,h4{
+    font-size: 30px;
+    padding: 40px;
+}
+.showResult .showResultContainer a {
+    margin-bottom: 10px;
+    font-size: 21px!important;
+    display: block;
+    text-decoration: none;
+    color: black;
+    padding: 15px 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-image: linear-gradient(rgba(0, 225, 255, 0.374),rgba(168, 241, 251, 0.926),rgba(121, 206, 162, 0.869));
+}
+
+header {
+    width: 100%;
+    height: auto;
+}
+header h2 {
+    color: white;
+    background-color: black!important;
+    padding: 20px 0px;
+    padding-left: 40px;
+}
