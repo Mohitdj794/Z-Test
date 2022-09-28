@@ -239,7 +239,7 @@ class Query extends Connection
 
         public function fetchUserDetailFromExamDetail()
         {
-            $sql = "select examMaintain.examTitle, result.result, result.score, result.startTime, result.endTime, result.date FROM examMaintain JOIN result ON examMaintain.ID = result.examMaintain_id where examMaintain.userName = 'krishna'";
+            $sql = "select examMaintain.examTitle, result.result, result.score, result.startTime, result.endTime, result.date FROM examMaintain JOIN result ON examMaintain.ID = result.examMaintain_id where examMaintain.userName = 'sangeeth '";
             $stmt = $this->con->query($sql);
             if ($stmt->num_rows > 0 )
             $result = $stmt->fetch_all(MYSQLI_ASSOC);
