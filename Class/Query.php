@@ -77,7 +77,7 @@
                     
                     $sql2="INSERT INTO Test_Result(Options,Answer,Question_id)Values('$exam','{$Ans}',$last_id)";
                     
-                    if($this->con->query($sql2)==true);
+                    if($this->con->query($sql2)==true)
                     {
                         header("LOCATION:/Php-Project/View/ViewCourse.php");
                         die();
