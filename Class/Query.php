@@ -1,4 +1,5 @@
 <?php
+
 require_once '../connection.php';
 
 class Query extends Connection
@@ -108,7 +109,7 @@ class Query extends Connection
                $str="";
                
                foreach ($var as $key => $value) {
-                   $str.= "<input type='radio' id='html' name='fav_language'>".$value."<br>";
+                   $str.= " ~>  ".$value."<br>";
                }
    
                

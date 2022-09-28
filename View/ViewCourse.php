@@ -12,7 +12,7 @@
 
 <div class="topnav" id="myTopnav">
 <a href="#" class="active">Z-TEST</a>
-<a href="#about">Home</a>
+<a href="#about" class="home">Home</a>
   
   
   <a class="l" href="#contact">Log Out</a>
