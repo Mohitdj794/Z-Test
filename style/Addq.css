@@ -1,0 +1,13 @@
+
+p,textarea{
+    position:relative;
+    left:10%;
+}
+
+.btn,#traces,.Ans,.sub{
+    margin-top: 20px;
+    position:relative;
+    left:10%;
+}
+
+    
