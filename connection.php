@@ -4,7 +4,7 @@ class Connection
 {
   private $serverName = "localhost";
   private $userName = "root";
-  private $password = "Vignesh@21";
+  private $password = "Ziffity@123";
   private $database = "z_Test";
   protected $con;
 
