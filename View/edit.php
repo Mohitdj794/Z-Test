@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>Update</title>
+    <link href="/Z-Test/assets/img/download.png" rel="icon">
 </head>
 <style>
     body{
