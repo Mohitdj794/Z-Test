@@ -26,7 +26,7 @@
 
     <div class="duration">
          <lable>Course Duration</lable>
-         <input class="time" type="number" name="time" required>in min<br>
+         <input class="time" type="number" name="time" required> in min<br>
     </div>
 
     <button class="button" type="submit" name="submit">Create Course</button>

@@ -23,7 +23,7 @@ class Query extends Connection
                 <td>{$row['TestDuration']} min</td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
-                <td><a class=\"delet\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
+                <td><a class=\"delete\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
             </tr>";
             }
             return $str;
@@ -54,7 +54,7 @@ class Query extends Connection
              
                 header('Location:/Z-Test/View/ViewCourse.php');
         }
-            echo "This Course is Alredy entered";
+            echo "<p class='error' style='color:red ;margin-left: 38%;margin-top: 20px;'>The Course <strong>{$name}</strong>  is alredy created</p>";
      }
     }
 
@@ -89,42 +89,36 @@ class Query extends Connection
         }
     }
 
-
     
-    public function ViewTest($id){
-        $sql="SELECT Test_Title.TestTitle,Test_Title.TestDuration,Test_Question.Question_id,Test_Question.Question,Test_Result.Options,Test_Result.Answer FROM Test_Title INNER JOIN Test_Question ON Test_Title.Test_id=Test_Question.Test_id INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Title.Test_id={$id}";
-
-        $i=0;
-       $result1=$this->con->query($sql);
-        $v=$result1->fetch_assoc();
-             echo "<h1>{$v['TestTitle']}</h1> <br>";
-             $result=$this->con->query($sql);
-        if($result->num_rows>0){
-           
-           while ($row=$result->fetch_assoc()){
-               
-               $var = json_decode($row['Options'],true);
-               // var_dump($var);
-               // print_r($var);
-               $str="";
-               
-               foreach ($var as $key => $value) {
-                   $str.= " ~>  ".$value."<br>";
-               }
-   
-               
-   
-               echo $i=1+$i.")  ".$row['Question']
-               ."<br>"."<br>"."   ".$str."<br> "
-               ."   <p class='Answer'>Answer: {$row['Answer']}</p>"
-               ."<a class=\"delet\" style=\"text-decoration:none\" href=\"EditQuestion.php?id={$row['Question_id']}\">Edit</a> <br> <br>";
-               
-               
-           }
-        }
-   
-   
-     }             
+                public function ViewTest($id)
+                {
+                    $sql = "SELECT Test_Title.TestTitle,Test_Title.TestDuration,Test_Question.Question_id,Test_Question.Question,Test_Result.Options,Test_Result.Answer FROM Test_Title INNER JOIN Test_Question ON Test_Title.Test_id=Test_Question.Test_id INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Title.Test_id={$id}";
+            
+                    $i = 0;
+                    $result1 = $this->con->query($sql);
+                    $v = $result1->fetch_assoc();
+                    echo "<h1>{$v['TestTitle']}</h1> <br>";
+                    $result = $this->con->query($sql);
+                    if ($result->num_rows > 0) {
+            
+                        while ($row = $result->fetch_assoc()) {
+            
+                            $var = json_decode($row['Options'], true);
+                            $str = "";
+            
+                            foreach ($var as $key => $value) {
+                                $str .= " ~> " . $value . "<br>";
+                            }
+            
+            
+            
+                            echo $i = 1 + $i . ")  " . $row['Question']
+                                . "<br>" . "<br>" . "   " . $str . "<br> "
+                                . "   <p class='Answer'>Answer: {$row['Answer']}</p>"
+                                . "<a class=\"delet\" style=\"text-decoration:none\" href=\"EditQuestion.php?id={$row['Question_id']}\">Edit</a> <br> <br>";
+                        }
+                    }
+                }
 
     public function EditTest($id)
     {
@@ -184,6 +178,7 @@ class Query extends Connection
                 header("LOCATION:view.php?id={$x[0]["Test_id"]}");
                 die();
             }
+            echo "error";
         }
     }
 
@@ -202,7 +197,7 @@ class Query extends Connection
                         <td>{$row['TestDuration']} min</td>
                         <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
                         <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
-                        <td><a class=\"delet\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
+                        <td><a class=\"delete\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
                     </tr>";
             }
             return $str;
@@ -276,6 +271,5 @@ class Query extends Connection
             $result = $stmt->fetch_all(MYSQLI_ASSOC);
             else $result = [];
             return $result;
-        }
-
+        }       
 }
