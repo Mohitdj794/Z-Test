@@ -33,6 +33,18 @@ h1{
   background-color: #04AA6D;
   color: white;
 }
+.btn{
+    background-color:  rgba(45, 53, 69, 0.907);
+  color: white;
+  padding: 7px 15px ;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 20px;
+}
+.btn:hover{
+    background-color:red;
+}
 </style>
 <body>
 <table id="customers">
@@ -72,7 +84,7 @@ for ($j=0; $j < count($examDetail); $j++) {
         }
         if ($testAlreadyTaken==0){
       
-                $stringdata .=  "<td><a href='../examPrev.html?id={$examDetail[$j]['Test_id']}'>Start Test</a></td></tr>";
+                $stringdata .=  "<td><a class='btn' href='../examPrev.html?id={$examDetail[$j]['Test_id']}'>Start Test</a></td></tr>";
   
         }
         $testAlreadyTaken=0;

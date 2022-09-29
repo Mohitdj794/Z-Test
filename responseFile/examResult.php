@@ -65,6 +65,7 @@ session_start();
     $lastID1 = $objToAddData->addExamResult("result",$prepareTable2Date);
 
     $result = $objToAddData->singleRowDataFromResult("result","id",$lastID1);
+    $result["name"] = $_SESSION['name'];
      $result = json_encode($result);
      echo $result;                                
      exit();

@@ -47,7 +47,7 @@ h1{
     $UserExamDetail = new Query();
     $result = $UserExamDetail->fetchUserDetailFromExamDetail($_SESSION['name']);
     if ($result == []){
-      echo "<script>$('table').hide() </script> <h1>You first take test<h1>";
+      echo "<script>$('table').hide() </script> <h1>You Didn't Attend Any Test<h1>";
     }
     for ($i=0; $i < count($result); $i++) { 
        echo "<tr><td>{$result[$i]['examTitle']} <br/></td>

@@ -28,11 +28,12 @@ function renderFormSubmit(result){
         // console.log(typeof JSON.parse(response));
         if(response["result"] == "pass"){ $result = "Congratulation" }
         else { $result = "Oops Better luck next time" }
-        showResult = `<div class="showResultContainer"><h3>${$result}</h3> <h4>Your score ${response["score"]}%</h4><a href="View/sample.php">Go to home</a></div>`
+        showResult = `<div class="showResultContainer"><h3>${$result}</h3> <h4>Your score ${response["score"]}%</h4><a id="userPage" href="View/sample.php">Go to home</a></div>`
         $(".container").hide();
         $(".showResult").show();
         $(".showResult").html(showResult);
         localStorage.clear();
+        // localStorage.setItem("userid",response["name"]+result[0]["TestTitle"])
         }
       })
     }

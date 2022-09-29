@@ -17,7 +17,6 @@ function Aajax(){
     data = ajax('responseFile/fetchExamData.php',dataID,"POST");
     return data;
 }
-
 dataRender(dataRenderExam);
 showSingleQuestion(dataRenderExam.length);
 renderFormSubmit(dataRenderExam);
