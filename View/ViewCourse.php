@@ -34,7 +34,7 @@
 </form>
 </div>
 
-<table >
+<table>
 <tr>
     <th>Test Name</th>
     <th>Duration </th>

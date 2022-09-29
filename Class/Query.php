@@ -22,7 +22,7 @@ class Query extends Connection
                 <td>{$row['TestDuration']} min</td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Php-Project/View/view.php?id={$row['Test_id']}\">View Test</a></td>
-                <td><a class=\"delet\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
+                <td><a class=\"delete\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
             </tr>";
             }
             return $str;
@@ -53,7 +53,7 @@ class Query extends Connection
              
                 header('Location:/Php-Project/View/ViewCourse.php');
         }
-            echo "This Course is Alredy entered";
+            echo "<p class='error' style='color:red ;margin-left: 38%;margin-top: 20px;'>The Course <strong>{$name}</strong>  is alredy created</p>";
      }
     }
 
@@ -196,7 +196,7 @@ class Query extends Connection
                         <td>{$row['TestDuration']} min</td>
                         <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
                         <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Php-Project/View/view.php?id={$row['Test_id']}\">View Test</a></td>
-                        <td><a class=\"delet\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
+                        <td><a class=\"delete\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
                     </tr>";
             }
             return $str;
@@ -247,14 +247,6 @@ class Query extends Connection
             return $result;
         }
         
-        public function fetchDataFromExamDetail()
-        {
-            $sql = "Select Test_Title.TestTitle,Test_Title.TestDuration,Test_Question.Question_id,Test_Question.Question,Test_Result.Options,Test_Result.Answer FROM Test_Title INNER JOIN Test_Question ON Test_Title.Test_id=Test_Question.Test_id INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Title.Test_id=6";
-            $stmt = $this->con->query($sql);
-            if ($stmt->num_rows > 0 )
-            $result = $stmt->fetch_all(MYSQLI_ASSOC);
-            else $result = [];
-            return $result;
-        }
+       
         
 }
