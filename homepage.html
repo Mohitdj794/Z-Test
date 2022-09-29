@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Z-TEST</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <link href="assets/img/download.png" rel="icon">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <link href="assets/css/style.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+</head>
+<style>
+  span {
+    color: red;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+</style>
+<body>
+<!--Register form-->
+<div class="modal fade" id="example2Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register-Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="form-control" role="form" id="Form2" action="/Z-Test/View/insert.php" method="POST">
+          <div class="mb-3">
+            <label for="exampleInputFirst_Name" class="form-label">Firstname</label>
+            <input type="text" class="form-control" id="exampleInputFirst_Name" name="first">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputLast_Name" class="form-label">Lastname</label>
+            <input type="text" class="form-control" id="exampleInputLast_Name" name="last">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputName1" class="form-label">Username</label>
+            <input type="text" class="form-control" id="exampleInputName1" name="name1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email-Address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" name="mail1" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="psw1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputConfirm_Password1" class="form-label">Confirm-password</label>
+            <input type="password" class="form-control" id="exampleInputConfirm_Password1" name="cpsw">
+          </div>
+          <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Login-Form-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><strong>Login-Form</strong></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form class="form-control" role="form" id="FormLogin" method="POST">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" name="mail" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="psw"><br>
+          <strong><span id="errorMissMatch"></span></strong>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="./js/script4.js"></script>
+<script src="./js/script5.js"></script>
+
+  <header id="header" class="fixed-top header-transparent">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <h1 class="logo"><a href="homepage.html">Z-TEST</a></h1>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" data-bs-toggle="modal" data-bs-target="#example2Modal">Register</a></li>
+          <li><a class="nav-link scrollto" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    </div>
+  </header>
+
+  <section id="hero" class="d-flex align-items-center justify-content-center">
+    <div class="container position-relative">
+      <h1>Welcome to Z-TEST</h1>
+      <h2>The fastest path to awesome learning</h2>
+      <h2>We are team of talented Trainers making Trainees Career Better</h2>
+      <a href="#about" class="btn-get-started scrollto">Get Started</a>
+    </div>
+  </section>
+
+  <main id="main">
+
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-6">
+            <img src="assets/img/images.jpeg" class="img-fluid" alt="" style="width: 500px;height:360px;">
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0">
+            <h3>What is an Online Examination System?</h3>
+            <p>
+              Online Examination System is a cost-effective, scalable way to convert traditional pen and paper-based exams to online and paperless mode.
+              Candidates can appear for the exam using any desktop, laptop, or mobile device with a browser. Exam results can be generated instantly for the objective type of questions.
+            </p>
+            <div class="row">
+              <div class="col-md-6">
+                <i class="bx bx-receipt"></i>
+                <h4>Online Tests</h4>
+                <p>You can conduct Online Aptitude Tests to understand the problem-solving, reasoning ability of the individual.
+                  Personality tests are suitable to know the nature of the person. Many multinational companies and institutes are using this method to select the right candidates.</p>
+              </div>
+              <div class="col-md-6">
+                <i class="bx bx-cube-alt"></i>
+                <h4>Online Exam Pattern</h4>
+                <p>You can conduct an exam with negative marking with defining passing marks criteria.
+                  You can also define online exams based on certain subjects, topics and difficulty levels. Examination questions can also be randomized from the available pool of the question bank based on pre-defined criteria.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>Z-Test</h3>
+            <p>
+              Metro Station, No.184-187, Temple Steps Block No: 1, Unit-A,8th Floor Anna Salai, Landmark:, near to Little Mount, Little Mount, Chennai, Tamil Nadu 600015<br><br>
+              <strong>Phone:</strong> 044-4269-5978<br>
+              <strong>Email:</strong> hrpartner@ziffity.com<br>
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#hero">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#about">About</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://www.w3schools.com/html/default.asp">HTML</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://www.w3schools.com/js/default.asp">Java script</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://www.w3schools.com/php/default.asp">PHP</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://www.w3schools.com/sql/default.asp">SQL</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://www.w3schools.com/css/default.asp">CSS</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Join Our Z-Test</h4>
+            <form action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong>Z-TEST</strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          Designed by <a href="https://ziffity.com/">Ziffity</a>
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+<script src="./js/script2.js"></script>
+<script src="./js/script3.js"></script>
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

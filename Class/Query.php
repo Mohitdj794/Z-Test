@@ -22,7 +22,7 @@ class Query extends Connection
                 <td>{$row['TestTitle']}</td>
                 <td>{$row['TestDuration']} min</td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
-                <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Php-Project/View/view.php?id={$row['Test_id']}\">View Test</a></td>
+                <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
             </tr>";
             }
@@ -40,7 +40,7 @@ class Query extends Connection
         $d1 = (int)$d;
         $sql = "DELETE From Test_Title where Test_id={$d1}";
         if ($this->con->query($sql)) {
-            header("LOCATION:/Php-Project/View/ViewCourse.php");
+            header("LOCATION:/Z-Test/View/ViewCourse.php");
         } else {
             echo "Test Data are here so you can't Delete the Course";
         }
@@ -52,7 +52,7 @@ class Query extends Connection
         $sql="INSERT INTO Test_Title(TestTitle ,TestDuration)VALUES('{$name}','{$time}')";
         if($this->con->query($sql)){
              
-                header('Location:/Php-Project/View/ViewCourse.php');
+                header('Location:/Z-Test/View/ViewCourse.php');
         }
             echo "This Course is Alredy entered";
      }
@@ -82,7 +82,7 @@ class Query extends Connection
             $sql2 = "INSERT INTO Test_Result(Options,Answer,Question_id)Values('$exam','{$Ans}',$last_id)";
 
             if ($this->con->query($sql2) == true); {
-                header("LOCATION:/Php-Project/View/ViewCourse.php");
+                header("LOCATION:/Z-Test/View/ViewCourse.php");
                 die();
             }
             echo "error";
@@ -201,7 +201,7 @@ class Query extends Connection
                         <td>{$row['TestTitle']}</td>
                         <td>{$row['TestDuration']} min</td>
                         <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
-                        <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Php-Project/View/view.php?id={$row['Test_id']}\">View Test</a></td>
+                        <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
                         <td><a class=\"delet\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
                     </tr>";
             }
@@ -231,9 +231,9 @@ class Query extends Connection
 
         // fetch single data only result table
 
-        public function singleRowDataFromResult(int $id)
+        public function singleRowDataFromResult(string $table,string $row, int $id)
         {
-          $sql = "SELECT * FROM result WHERE id = $id";
+          $sql = "SELECT * FROM $table WHERE $row = $id";
           $stmt = $this->con->query($sql);
             if ($stmt->num_rows > 0)
             $result = $stmt->fetch_assoc();
@@ -243,13 +243,39 @@ class Query extends Connection
 
         // this method get the userName to return the data what are the exam he/she taken and result
 
-        public function fetchUserDetailFromExamDetail()
+        public function fetchUserDetailFromExamDetail($name)
         {
-            $sql = "select examMaintain.examTitle, result.result, result.score, result.startTime, result.endTime, result.date FROM examMaintain JOIN result ON examMaintain.ID = result.examMaintain_id where examMaintain.userName = 'krishna'";
+            $sql = "select examMaintain.examTitle, result.result, result.score, result.startTime, result.endTime, result.date FROM examMaintain JOIN result ON examMaintain.ID = result.examMaintain_id where examMaintain.userName = '$name'";
             $stmt = $this->con->query($sql);
             if ($stmt->num_rows > 0 )
             $result = $stmt->fetch_all(MYSQLI_ASSOC);
             else $result = [];
             return $result;
         }
+
+
+        // fetch data from Test_Title ;
+
+        public function testTitleData()
+        {
+            $sql = "select * from Test_Title";
+            $stmt = $this->con->query($sql);
+            if ($stmt->num_rows > 0 )
+            $result = $stmt->fetch_all(MYSQLI_ASSOC);
+            else $result = [];      
+            return $result;
+        }
+
+        // fetch particular exam detail
+
+        public function fetchDataFromExamDetail($id)
+        {
+            $sql = "Select Test_Title.TestTitle,Test_Title.TestDuration,Test_Question.Question_id,Test_Question.Question,Test_Result.Options,Test_Result.Answer FROM Test_Title INNER JOIN Test_Question ON Test_Title.Test_id=Test_Question.Test_id INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Title.Test_id=$id";
+            $stmt = $this->con->query($sql);
+            if ($stmt->num_rows > 0 )
+            $result = $stmt->fetch_all(MYSQLI_ASSOC);
+            else $result = [];
+            return $result;
+        }
+
 }

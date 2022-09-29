@@ -1,6 +1,10 @@
 import {addData} from './localstorageSaveData.js';
 function showSingleQuestion(result){
-   
+   if (result == 1){
+    $('#prev').hide();
+    $('#next').hide();
+    $("#submit").show();
+   }else{
     $(".showResult").hide();
             var num=1,methodHandle;
             $('#prev').hide();
@@ -28,6 +32,7 @@ function showSingleQuestion(result){
                     $(`.question.${num}`).show();
                     $("#submit").hide();
                 })
+            }
         }
         export {showSingleQuestion};
 

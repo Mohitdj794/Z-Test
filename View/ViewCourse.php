@@ -1,3 +1,8 @@
+<?php
+session_id("admin123");
+session_start();
+echo session_id();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +20,7 @@
 <a href="#about" class="home">Home</a>
   
   
-  <a class="l" href="#contact">Log Out</a>
+  <a class="l" href="adminLogout.php">Log Out</a>
 
   
 </div>

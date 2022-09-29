@@ -1,8 +1,8 @@
 <?php
-
+    session_start();
     require_once '../Class/Query.php';
-    // $useName = $_POST["user"];
     $UserExamDetail = new Query();
-    $result = $UserExamDetail->fetchUserDetailFromExamDetail();
+    $result = $UserExamDetail->fetchUserDetailFromExamDetail($_SESSION['name']);
+    print_r($result);
     print_r(json_encode($result));
-        
+    

@@ -62,7 +62,7 @@
 
     $lastID1 = $objToAddData->addExamResult("result",$prepareTable2Date);
 
-    $result = $objToAddData->singleRowDataFromResult($lastID1);
+    $result = $objToAddData->singleRowDataFromResult("result","id",$lastID1);
      $result = json_encode($result);
      echo $result;                                
      exit();
