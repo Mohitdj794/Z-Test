@@ -9,7 +9,7 @@ function renderFormSubmit(result,startTime){
         var $result='';
         e.preventDefault();
         function test(){
-            return confirm("Confirm to submit");
+            return confirm("Do you want confirm to submit");
         }
         if ($TIMER !== 0){
            var confirmTimer = test();

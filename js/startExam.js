@@ -45,7 +45,6 @@ function dataRender(result){
     $("#renderForm").append(data);
     $(".question").hide();
     $("#submit").hide();
-    $(`.question.${1}`).show();
     // addData();
 }
 export {dataRender};

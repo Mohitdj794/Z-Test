@@ -1,12 +1,30 @@
 import {addData} from './localstorageSaveData.js';
 function showSingleQuestion(result){
-   
+    console.log(result-1);
     $(".showResult").hide();
-            var num=1,methodHandle;
+            var num,methodHandle;
+            if (localStorage.getItem("num") === null || undefined){
+                num = 1;
+                $(`.question.${num}`).show();
+                localStorage.setItem("num",num);
+            }
+            else{
+                num = localStorage.getItem("num");
+                $(`.question`).hide();
+                $(`.question.${num}`).show();
+                 if (num == result) {
+                    $('#next').hide();
+                    $("#submit").show();
+                    }
+            }
+            if(num == 1)
             $('#prev').hide();
+            else
+            $('#prev').show();
+       
                 $("#next").click(function(){
                     methodHandle = addData(num);
-                    if (methodHandle==true ){
+                    if (methodHandle==true ){   
                             $('#prev').show();
                             if (num == result-1)    {
                             $('#next').hide();
@@ -15,6 +33,7 @@ function showSingleQuestion(result){
                             $(`.question.${num}`).hide();
                             num++;
                             $(`.question.${num}`).show();
+                            localStorage.setItem("num",num);
                 }
                 
                 })
@@ -27,6 +46,7 @@ function showSingleQuestion(result){
                     num--;
                     $(`.question.${num}`).show();
                     $("#submit").hide();
+                    localStorage.setItem("num",num);
                 })
         }
         export {showSingleQuestion};
