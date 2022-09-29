@@ -1,6 +1,6 @@
 import { ajax } from './ajax.js';
 import { $TIMER } from './Timer.js';
-function renderFormSubmit(result,startTime){
+function renderFormSubmit(result){
     $(document).on("submit","#renderForm",function(e){
         var response;
         var formdata;
@@ -23,6 +23,7 @@ function renderFormSubmit(result,startTime){
             count++;
         }   
         formdata.append('startTime',`${localStorage.getItem("startTime")}`)
+        formdata.append('examTitle',result[0]["TestTitle"]);
         response = ajax('./responseFile/examResult.php',formdata,"POST");
         // console.log(typeof JSON.parse(response));
         if(response["result"] == "pass"){ $result = "Congratulation" }

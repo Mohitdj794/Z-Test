@@ -1,4 +1,5 @@
 <?php 
+session_start();
      require_once '../Class/Query.php';
      $objToAddData = new Query();
      $do = $_REQUEST;
@@ -18,7 +19,7 @@
 
     // count Question length 
     $countQuestion = count($arrAns);
-
+ 
     // Start Time;
     $startTime = $do["startTime"];
 
@@ -39,10 +40,11 @@
     $answerChoosed = json_encode($arrOption);
 
     // prepare all data into insert formate;
+    $name_user = $_SESSION['name'];
     $prepareTable1Date = [
           "answerChoosed"=>$answerChoosed,
-          "examTitle"=>'Maths',
-          "userName"=>'krishna'
+          "examTitle"=>$do["examTitle"],
+          "userName"=>$name_user
     ];   
     
     if(!empty($prepareTable1Date)){

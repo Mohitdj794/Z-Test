@@ -1,7 +1,5 @@
 <?php
-session_id("admin123");
 session_start();
-echo session_id();
 ?>
 <!DOCTYPE html>
 <html lang="en">

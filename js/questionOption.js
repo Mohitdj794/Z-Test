@@ -18,7 +18,6 @@ function Aajax(){
     return data;
 }
 
-console.log(dataRenderExam)
 dataRender(dataRenderExam);
 showSingleQuestion(dataRenderExam.length);
 renderFormSubmit(dataRenderExam);
