@@ -1,6 +1,6 @@
 import { ajax } from './ajax.js';
 import { $TIMER } from './Timer.js';
-function renderFormSubmit(result,startTime){
+function renderFormSubmit(result){
     $(document).on("submit","#renderForm",function(e){
         var response;
         var formdata;

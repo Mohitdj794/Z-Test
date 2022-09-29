@@ -1,6 +1,6 @@
 import {addData} from './localstorageSaveData.js';
 function showSingleQuestion(result){
-    console.log(result-1);
+    
     $(".showResult").hide();
             var num,methodHandle;
             if (localStorage.getItem("num") === null || undefined){
