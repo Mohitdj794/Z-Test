@@ -1,3 +1,12 @@
+Starting page ->  homepage,html
+
+
+
+
+
+
+
+
 create table userLogin (id int PRIMARY KEY AUTO_INCREMENT, userName varchar(50) UNIQUE, email varchar(50) UNIQUE, password varchar(100) NOT NULL);
 
 create table Test_Title (Test_id int PRIMARY KEY AUTO_INCREMENT, TestTitle varchar(100) UNIQUE, TestDuration int );	
