@@ -26,7 +26,7 @@ function renderFormSubmit(result){
         formdata.append('examTitle',result[0]["TestTitle"]);
         response = ajax('./responseFile/examResult.php',formdata,"POST");
         // console.log(typeof JSON.parse(response));
-        if(response["result"] == "pass"){ $result = "Congratulation" }
+        if(response["result"] == "pass"){ $result = "Congratulations" }
         else { $result = "Oops Better luck next time" }
         showResult = `<div class="showResultContainer"><h3>${$result}</h3> <h4>Your score ${response["score"]}%</h4><a id="userPage" href="View/sample.php">Go to home</a></div>`
         $(".container").hide();
