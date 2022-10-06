@@ -10,7 +10,7 @@ class insertData extends Connection{
             header("Location:../homepage.html");
          }
          else{
-            echo "error in inserting the data".$con->error;
+            echo "error in inserting the data".$this->con->error;
          }
     }   
 }
