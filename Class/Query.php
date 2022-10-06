@@ -1,8 +1,8 @@
 <?php
 
-require_once '../connection.php';
+require_once './connection.php';
 
-class Query extends Connection
+class Query extends Conn
 {
     // properties 
     protected $table;
@@ -211,15 +211,14 @@ class Query extends Connection
 
         public function addExamResult(string $table, array $data)
         {
-            $key = array_keys($data);
-            $val = array_values($data);
-            $sql = "INSERT INTO $table (" . implode(', ', $key) . ") "
-            . "VALUES ('" . implode("', '", $val) . "')";
-                 if ($this->con->query($sql) === TRUE) {
+            $result = $this->con->insert($data)
+            ->into($table);
+        
+                 if ($result === true) {
                     $last_id = $this->con->insert_id;
                     return $last_id;
                   } else {
-                    echo "Error: " . $sql . "<br>" . $this->con->error;
+                    echo "Error: " . "<br>" . $this->con->error;
                   }
         }
 
@@ -228,12 +227,18 @@ class Query extends Connection
 
         public function singleRowDataFromResult(string $table,string $row, int $id)
         {
-          $sql = "SELECT * FROM $table WHERE $row = $id";
-          $stmt = $this->con->query($sql);
-            if ($stmt->num_rows > 0)
-            $result = $stmt->fetch_assoc();
-            else $result = [];
-            return $result;
+            $result = $this->con->from($table)
+             ->where($row)->is($id) //Alternatively: ->where('age')->ne(18)
+             ->select()
+             ->all();
+             print_r($result);
+             return $result;
+        //   $sql = "SELECT * FROM $table WHERE $row = $id";
+        //   $stmt = $this->con->query($sql);
+        //     if ($stmt->num_rows > 0)
+        //     $result = $stmt->fetch_assoc();
+        //     else $result = [];
+        //     return $result;
         }
 
         // this method get the userName to return the data what are the exam he/she taken and result
@@ -253,11 +258,9 @@ class Query extends Connection
 
         public function testTitleData()
         {
-            $sql = "select * from Test_Title";
-            $stmt = $this->con->query($sql);
-            if ($stmt->num_rows > 0 )
-            $result = $stmt->fetch_all(MYSQLI_ASSOC);
-            else $result = [];      
+            $result = $this->con->from('Test_Title')
+            ->select()
+            ->all();
             return $result;
         }
 
@@ -265,11 +268,22 @@ class Query extends Connection
 
         public function fetchDataFromExamDetail($id)
         {
-            $sql = "Select Test_Title.TestTitle,Test_Title.TestDuration,Test_Question.Question_id,Test_Question.Question,Test_Result.Options,Test_Result.Answer FROM Test_Title INNER JOIN Test_Question ON Test_Title.Test_id=Test_Question.Test_id INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Title.Test_id=$id";
-            $stmt = $this->con->query($sql);
-            if ($stmt->num_rows > 0 )
-            $result = $stmt->fetch_all(MYSQLI_ASSOC);
-            else $result = [];
+            $result = $this->con->from('Test_Title')
+             ->join('Test_Question', function($join){
+                $join->on('Test_Title.Test_id', 'Test_Question.Test_id');
+             })
+             ->join(' Test_Result', function($join){
+                $join->on('Test_Question.Question_id', 'Test_Result.Question_id');
+             })
+             ->where('Test_Title.Test_id')->is($id)
+             ->select(['Test_Title.TestTitle','Test_Title.TestDuration','Test_Question.Question_id','Test_Question.Question','Test_Result.Options','Test_Result.Answer'])
+             ->all();
+
+            // $sql = "Select Test_Title.TestTitle,Test_Title.TestDuration,Test_Question.Question_id,Test_Question.Question,Test_Result.Options,Test_Result.Answer FROM Test_Title INNER JOIN Test_Question ON Test_Title.Test_id=Test_Question.Test_id INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Title.Test_id=$id";
+            // $stmt = $this->con->query($sql);
+            // if ($stmt->num_rows > 0 )
+            // $result = $stmt->fetch_all(MYSQLI_ASSOC);
+            // else $result = [];
             return $result;
         }       
 }
