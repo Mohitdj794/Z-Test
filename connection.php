@@ -1,6 +1,8 @@
 <?php
-
-class Connection
+ require "../vendor/autoload.php";
+ use Opis\Database\Database;
+ use Opis\Database\Connection;
+class Conn
 {
   private $serverName = "localhost";
   private $userName = "root";
@@ -10,12 +12,15 @@ class Connection
 
   function __construct()
   {
-    $this->con = new mysqli($this->serverName, $this->userName, $this->password, $this->database);
-
-    if ($this->con->connect_error) {
-      die("Connection failed: " . $this->con->connect_error);
-    }
+    $connection = new Connection(
+      'mysql:host=localhost;dbname=z_Test',
+      'root',
+      'Viratkohli18@'
+  );
+  $this->con = new Database($connection);  
   }
 }
+
+
 
 

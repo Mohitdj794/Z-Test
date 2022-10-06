@@ -2,11 +2,16 @@
 
 require_once '../connection.php';
 
-class Query extends Connection
+class Query extends Conn
 {
     // properties 
     protected $table;
-
+    public function conn(){
+        $result = $this->con->from('userLogin')
+             ->select()
+             ->all();
+             print_r($result);
+    }
     public function displayThis()
     {
 
@@ -32,7 +37,7 @@ class Query extends Connection
         }
     }
 
-
+   
 
 
     public function DeleteThis($d)
