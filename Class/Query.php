@@ -5,25 +5,6 @@ require '../connection.php';
 class Query extends Conn
 {
     
-    protected $table;
-    public function conn($id){
-     
-
-         $x="";
-        $result = $this->con->from('Test_Question')
-        ->where('Question_id')->is(89)
-         ->select()
-         ->all();
-         
-         foreach ($result as $user) {
-        $x= $user->Test_id;
-        }
-       echo $x;
-
-        
-    }
-
-    
     public function displayThis()
     {
 
@@ -223,7 +204,7 @@ class Query extends Conn
             ->set(array(
                'Question' => "$Question"
             ));
-                
+
 
             $obj = $_REQUEST;
             print_r($obj);
