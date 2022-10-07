@@ -17,9 +17,11 @@ $(document).ready(function(){
                 console.log("wait...");
             },
             success:function(response){
-                if(response.charAt(0)=="{" && response.charAt(response.length-1)=="}"){
-                    result = JSON.parse(response);
-                    window.location= `/Z-Test/View/sample.php?id=${result["username"]}`;
+                console.log(response);
+                if(response.charAt(0)=="[" && response.charAt(response.length-1)=="]"){
+                    result = JSON.parse(response);  
+                    
+                    window.location= `/Z-Test/View/sample.php?id=${result[0]["username"]}`;
                 }else{
                     $("#errorMissMatch").html(response);
                 }

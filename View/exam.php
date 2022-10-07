@@ -7,11 +7,15 @@
         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 </head>
 <style>
+body{
+  background-color:grey;
+}
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 1000px;
   top: 50px;
+  left: 80px;
   position: relative;
 }
 h1{
@@ -62,7 +66,8 @@ require_once '../Class/Query.php';
 $fetchExamDetail = new Query();
 $examDetail = $fetchExamDetail->testTitleData();
 $resultDetail = $fetchExamDetail->fetchUserDetailFromExamDetail($_SESSION['name']);
-
+$examDetail = json_decode(json_encode($examDetail),true);
+$resultDetail = json_decode(json_encode($resultDetail),true);
 $resultTitle = [];
 for ($i=0; $i < count($resultDetail); $i++) { 
         $resultTitle[]=$resultDetail[$i]["examTitle"];

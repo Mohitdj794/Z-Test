@@ -14,10 +14,11 @@ function Aajax(){
     const startTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     localStorage.setItem("startTime",startTime);
     }
-    data = ajax('responseFile/fetchExamData.php',dataID,"POST");
+    data = ajax('./responseFile/fetchExamData.php',dataID,"POST");
     return data;
 }
 dataRender(dataRenderExam);
 showSingleQuestion(dataRenderExam.length);
 renderFormSubmit(dataRenderExam);
 
+    

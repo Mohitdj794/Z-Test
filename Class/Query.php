@@ -1,73 +1,62 @@
 <?php
-
-require_once '../connection.php';
-
-class Query extends Connection
+require '../connection.php';
+class Query extends Conn
 {
-    // properties 
-    protected $table;
-
     public function displayThis()
     {
-
-        $sql = "SELECT * FROM Test_Title";
-
-        $result = $this->con->query($sql);
-
-        if ($result->num_rows > 0) {
-            $str = '';
-
-            while ($row = $result->fetch_assoc()) {
-                $str .= "<tr>
+        $result =  $this->con->from('Test_Title')
+            ->select()
+            ->all();
+        $object = json_decode(json_encode($result), true);
+        $str = "";
+        foreach ($object as $key => $row) {
+            $str .= "<tr>
                 <td>{$row['TestTitle']}</td>
                 <td>{$row['TestDuration']} min</td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
                 <td><a class=\"delete\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
             </tr>";
-            }
-            return $str;
-        } else {
-            echo "result 0";
         }
+        return $str;
     }
-
-
-
 
     public function DeleteThis($d)
     {
         $d1 = (int)$d;
-        $sql = "DELETE From Test_Title where Test_id={$d1}";
-        if ($this->con->query($sql)) {
-            header("LOCATION:/Z-Test/View/ViewCourse.php");
+        $result = $this->con->from('Test_Title')
+            ->where('Test_id')->is($d1)
+            ->delete();
+
+        if ($result) {
+            header('Location:/Z-Test/View/ViewCourse.php');
         } else {
-            echo "Test Data are here so you can't Delete the Course";
+            echo "fille";
         }
     }
 
-
-    public function CreatCourse($submit,$name,$time){
-        if(isset($submit)){
-        $sql="INSERT INTO Test_Title(TestTitle ,TestDuration)VALUES('{$name}','{$time}')";
-        if($this->con->query($sql)){
-             
-                header('Location:/Z-Test/View/ViewCourse.php');
-        }
-            echo "<p class='error' style='color:red ;margin-left: 38%;margin-top: 20px;'>The Course <strong>{$name}</strong>  is alredy created</p>";
-     }
+    public function CreatCourse($name, $time)
+    {
+        $result = $this->con->insert(array(
+            'TestTitle' => "{$name}",
+            'TestDuration' => "{$time}"
+        ))
+            ->into('Test_Title');
+        return $result;
     }
-
 
     public function  AddTest($submit, $name, $id, $option, $Ans)
     {
 
         if (isset($submit)) {
 
-            $sql = "INSERT INTO Test_Question(Question,Test_id)VALUES('{$name}','{$id}')";
-            $this->con->query($sql);
-            $last_id = $this->con->insert_id;
-            echo $last_id;
+            $result = $this->con->insert(array(
+                'Question' => "$name",
+                'Test_id' => "$id"
+            ))
+                ->into('Test_Question');
+
+            $last_id = $this->con->from('Test_Question')->max('Question_id');
 
             $arr = $option;
             $count = 1;
@@ -78,10 +67,14 @@ class Query extends Connection
             }
 
             $exam = json_encode($result);
+            $result1 = $this->con->insert(array(
+                'Options' => "$exam",
+                'Answer' => "$Ans",
+                'Question_id' => "$last_id"
+            ))
+                ->into('Test_Result');
 
-            $sql2 = "INSERT INTO Test_Result(Options,Answer,Question_id)Values('$exam','{$Ans}',$last_id)";
-
-            if ($this->con->query($sql2) == true); {
+            if ($result1 == true); {
                 header("LOCATION:/Z-Test/View/ViewCourse.php");
                 die();
             }
@@ -89,73 +82,75 @@ class Query extends Connection
         }
     }
 
-    
-                public function ViewTest($id)
-                {
-                    $sql = "SELECT Test_Title.TestTitle,Test_Title.TestDuration,Test_Question.Question_id,Test_Question.Question,Test_Result.Options,Test_Result.Answer FROM Test_Title INNER JOIN Test_Question ON Test_Title.Test_id=Test_Question.Test_id INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Title.Test_id={$id}";
-            
-                    $i = 0;
-                    $result1 = $this->con->query($sql);
-                    $v = $result1->fetch_assoc();
-                    echo "<h1>{$v['TestTitle']}</h1> <br>";
-                    $result = $this->con->query($sql);
-                    if ($result->num_rows > 0) {
-            
-                        while ($row = $result->fetch_assoc()) {
-            
-                            $var = json_decode($row['Options'], true);
-                            $str = "";
-            
-                            foreach ($var as $key => $value) {
-                                $str .= " ~> " . $value . "<br>";
-                            }
-            
-            
-            
-                            echo $i = 1 + $i . ")  " . $row['Question']
-                                . "<br>" . "<br>" . "   " . $str . "<br> "
-                                . "   <p class='Answer'>Answer: {$row['Answer']}</p>"
-                                . "<a class=\"delet\" style=\"text-decoration:none\" href=\"EditQuestion.php?id={$row['Question_id']}\">Edit</a> <br> <br>";
-                        }
-                    }
-                }
+    public function ViewTest($id)
+    {
+        $result = $this->con->from('Test_Title')
+            ->join('Test_Question', function ($join) {
+                $join->on('Test_Title.Test_id', 'Test_Question.Test_id');
+            })
+            ->join('Test_Result', function ($join) {
+                $join->on('Test_Question.Question_id', 'Test_Result.Question_id');
+            })
+            ->where('Test_Title.Test_id')->is($id)
+            ->select()
+            ->all();
+        $object = json_decode(json_encode($result), true);
+        $i = 0;
+        $str1 = "";
+        foreach ($object as $key => $v) {
+            $str1 = "<h1>{$v['TestTitle']}</h1> <br>";
+        }
+        echo $str1;
+        foreach ($object as $key => $row) {
+
+            $var = json_decode($row['Options'], true);
+            $str = "";
+
+            foreach ($var as $key => $value) {
+                $str .= " ~> " . $value . "<br>";
+            }
+            echo $i = 1 + $i . ")  " . $row['Question']
+                . "<br>" . "<br>" . "   " . $str . "<br> "
+                . "   <p class='Answer'>Answer: {$row['Answer']}</p>"
+                . "<a class=\"delet\" style=\"text-decoration:none\" href=\"EditQuestion.php?id={$row['Question_id']}\">Edit</a> <br> <br>";
+        }
+    }
 
     public function EditTest($id)
     {
-        $sql = "SELECT Test_Question.Question,Test_Result.Options,Test_Result.Answer from Test_Question INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Question.Question_id={$id}";
-
-        $result = $this->con->query($sql);
-        if ($result->num_rows > 0) {
-
-            while ($row = $result->fetch_assoc()) {
-                $var = json_decode($row['Options'], true);
-                $str = "";
-                echo "<p><label>Question</label></p>
+        $result = $this->con->from('Test_Question')
+            ->join('Test_Result', function ($join) {
+                $join->on('Test_Question.Question_id', 'Test_Result.Question_id');
+            })
+            ->where('Test_Question.Question_id')->is($id)
+            ->select()
+            ->all();
+        $object = json_decode(json_encode($result), true);
+        foreach ($object as $key => $row) {
+            $var = json_decode($row['Options'], true);
+            $str = "";
+            echo "<p><label>Question</label></p>
                        <textarea  name='Question' class='Que' rows='10' cols='70'>{$row['Question']}</textarea> <br>
                          ";
-
-                echo "<p>Options</p>";
-
-                $count = 1;
-                foreach ($var as $key => $value) {
-                    $str .= "<input type='text' name='Option$count' value='$value'><br>";
-                    $count++;
-                }
-
-                echo $str . "<br>";
-
-                echo "<p>Answer</p><input type='text' name='Answer' value='{$row['Answer']}'>";
+            echo "<p>Options</p>";
+            $count = 1;
+            foreach ($var as $key => $value) {
+                $str .= "<input type='text' name='Option$count' value='$value'><br>";
+                $count++;
             }
+            echo $str . "<br>";
+            echo "<p>Answer</p><input type='text' name='Answer' value='{$row['Answer']}'>";
         }
     }
+
     public function UpdateTest($submit, $Question, $Answer, $id)
     {
-
         if (isset($submit)) {
-
-            $sql = "UPDATE Test_Question SET Question='{$Question}' where Question_id={$id}";
-            $this->con->query($sql);
-
+            $result = $this->con->update('Test_Question')
+                ->where('Question_id')->is($id)
+                ->set(array(
+                    'Question' => "$Question"
+                ));
             $obj = $_REQUEST;
             print_r($obj);
             $Option = [];
@@ -166,110 +161,123 @@ class Query extends Connection
             }
             $r = json_encode($Option);
             print_r($r);
-
-
-            $sql1 = "Select Test_id from Test_Question where Question_id={$id}";
-            $result = $this->con->query($sql1);
-            $x = $result->fetch_all(MYSQLI_ASSOC);
-            print_r($x);
-            $sql2 = "UPDATE Test_Result SET Options='$r',Answer= '{$Answer}' where Question_id={$id}";
-
-            if ($this->con->query($sql2) == true); {
-                header("LOCATION:view.php?id={$x[0]["Test_id"]}");
+            $x = "";
+            $result3 = $this->con->from('Test_Question')
+                ->where('Question_id')->is($id)
+                ->select()
+                ->all();
+            foreach ($result3 as $user) {
+                $x = $user->Test_id;
+            }
+            echo $x;
+            $result1 = $this->con->update('Test_Result')
+                ->where('Question_id')->is($id)
+                ->set(array(
+                    'Options'  => "$r",
+                    'Answer' =>  "$Answer"
+                ));
+            if ($result1 == true); {
+                header("LOCATION:view.php?id={$x}");
                 die();
             }
             echo "error";
         }
     }
 
-
     public function SearchCourse($search)
     {
-        $sql = "SELECT * FROM Test_Title WHERE TestTitle LIKE '{$search}%' ";
-        $result = $this->con->query($sql);
-
-        if ($result->num_rows > 0) {
-            $str = '';
-
-            while ($row = $result->fetch_assoc()) {
+        $result = $this->con->from('Test_Title')
+            ->where('TestTitle')->like("{$search}%")
+            ->select()
+            ->all();
+        if ($result == []) {
+            echo "Zero Result";
+        } else {
+            $object = json_decode(json_encode($result), true);
+            $str = "";
+            foreach ($object as $key => $row) {
                 $str .= "<tr>
-                        <td>{$row['TestTitle']}</td>
-                        <td>{$row['TestDuration']} min</td>
-                        <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
-                        <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
-                        <td><a class=\"delete\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
-                    </tr>";
+                    <td>{$row['TestTitle']}</td>
+                    <td>{$row['TestDuration']} min</td>
+                    <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
+                    <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
+                    <td><a class=\"delete\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
+                </tr>";
             }
             return $str;
-        } else {
-            echo "result 0";
         }
     }
-
     // User return Exam data add fetch 
     // add data table name and array of data;
 
-        public function addExamResult(string $table, array $data)
-        {
-            $key = array_keys($data);
-            $val = array_values($data);
-            $sql = "INSERT INTO $table (" . implode(', ', $key) . ") "
-            . "VALUES ('" . implode("', '", $val) . "')";
-                 if ($this->con->query($sql) === TRUE) {
-                    $last_id = $this->con->insert_id;
-                    return $last_id;
-                  } else {
-                    echo "Error: " . $sql . "<br>" . $this->con->error;
-                  }
+    public function addExamResult(string $table, array $data)
+    {
+        if ($table == "examMaintain") {
+            $id = "ID";
+        } else {
+            $id = "id";
         }
+        $result = $this->con->insert($data)
+            ->into($table);
 
+        if ($result === true) {
 
-        // fetch single data only result table
+            $last_id = $this->con->from($table)->max($id);
 
-        public function singleRowDataFromResult(string $table,string $row, int $id)
-        {
-          $sql = "SELECT * FROM $table WHERE $row = $id";
-          $stmt = $this->con->query($sql);
-            if ($stmt->num_rows > 0)
-            $result = $stmt->fetch_assoc();
-            else $result = [];
-            return $result;
+            return $last_id;
+        } else {
+            echo "Error: " . "<br>" . $this->con->error;
         }
+    }
+    // fetch single data only result table
 
-        // this method get the userName to return the data what are the exam he/she taken and result
+    public function singleRowDataFromResult(string $table, string $row, int $id)
+    {
+        $result = $this->con->from($table)
+            ->where($row)->is($id) //Alternatively: ->where('age')->ne(18)
+            ->select()
+            ->all();
+        return $result;
+    }
 
-        public function fetchUserDetailFromExamDetail($name)
-        {
-            $sql = "select examMaintain.examTitle, result.result, result.score, result.startTime, result.endTime, result.date FROM examMaintain JOIN result ON examMaintain.ID = result.examMaintain_id where examMaintain.userName = '$name'";
-            $stmt = $this->con->query($sql);
-            if ($stmt->num_rows > 0 )
-            $result = $stmt->fetch_all(MYSQLI_ASSOC);
-            else $result = [];
-            return $result;
-        }
+    // this method get the userName to return the data what are the exam he/she taken and result
 
+    public function fetchUserDetailFromExamDetail($name)
+    {
+        $result = $this->con->from('examMaintain')
+            ->join('result', function ($join) {
+                $join->on('examMaintain.ID', 'result.examMaintain_id');
+            })
+            ->where('examMaintain.userName')->is($name)
+            ->select(['examMaintain.examTitle', 'result.result', 'result.score', 'result.startTime', 'result.endTime', 'result.date'])
+            ->all();
 
-        // fetch data from Test_Title ;
+        return $result;
+    }
+    // fetch data from Test_Title ;
 
-        public function testTitleData()
-        {
-            $sql = "select * from Test_Title";
-            $stmt = $this->con->query($sql);
-            if ($stmt->num_rows > 0 )
-            $result = $stmt->fetch_all(MYSQLI_ASSOC);
-            else $result = [];      
-            return $result;
-        }
+    public function testTitleData()
+    {
+        $result = $this->con->from('Test_Title')
+            ->select()
+            ->all();
+        return $result;
+    }
+    // fetch particular exam detail
 
-        // fetch particular exam detail
+    public function fetchDataFromExamDetail($id)
+    {
+        $result = $this->con->from('Test_Title')
+            ->join('Test_Question', function ($join) {
+                $join->on('Test_Title.Test_id', 'Test_Question.Test_id');
+            })
+            ->join('Test_Result', function ($join) {
+                $join->on('Test_Question.Question_id', 'Test_Result.Question_id');
+            })
+            ->where('Test_Title.Test_id')->is($id)
+            ->select(['Test_Title.TestTitle', 'Test_Title.TestDuration', 'Test_Question.Question_id', 'Test_Question.Question', 'Test_Result.Options', 'Test_Result.Answer'])
+            ->all();
 
-        public function fetchDataFromExamDetail($id)
-        {
-            $sql = "Select Test_Title.TestTitle,Test_Title.TestDuration,Test_Question.Question_id,Test_Question.Question,Test_Result.Options,Test_Result.Answer FROM Test_Title INNER JOIN Test_Question ON Test_Title.Test_id=Test_Question.Test_id INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Title.Test_id=$id";
-            $stmt = $this->con->query($sql);
-            if ($stmt->num_rows > 0 )
-            $result = $stmt->fetch_all(MYSQLI_ASSOC);
-            else $result = [];
-            return $result;
-        }       
+        return $result;
+    }
 }

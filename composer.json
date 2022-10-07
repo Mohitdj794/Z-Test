@@ -1,0 +1,6 @@
+{
+    "require": {
+        "opis/orm": "^1.0",
+        "opis/database": "^4.2"
+    }
+}
