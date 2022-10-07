@@ -1,15 +1,15 @@
 <?php
 session_start();
 require_once "../connection.php";
-class Query2 extends Connection{
+class Query2 extends Conn{
     function updateData($first,$last){
-        $sql = "UPDATE userLogin SET firstName='$first',lastName='$last' where username='{$_SESSION['name']}'";
-        if($this->con->query($sql)){
+        $result = $this->con->update('userLogin')
+             ->where('username')->is($_SESSION['name'])
+             ->set(array(
+                'firstName' => "$first",
+                'lastName' => "$last",
+             ));
             header("Location:sample.php");
-          }
-          else{
-             echo "error in inserting the data".$con->error;
-          }
     }
 }
 $conn = new Query2();

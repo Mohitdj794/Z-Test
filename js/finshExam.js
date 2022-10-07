@@ -25,8 +25,8 @@ function renderFormSubmit(result){
         formdata.append('startTime',`${localStorage.getItem("startTime")}`)
         formdata.append('examTitle',result[0]["TestTitle"]);
         response = ajax('./responseFile/examResult.php',formdata,"POST");
-        console.log(typeof response);
         if(response[0]["result"] == "pass"){ $result = "Congratulations" }
+        // console.log(typeof JSON.parse(response));
         else { $result = "Oops Better luck next time" }
         showResult = `<div class="showResultContainer"><h3>${$result}</h3> <h4>Your score ${response[0]["score"]}%</h4><a id="userPage" href="View/sample.php">Go to home</a></div>`
         $(".container").hide();

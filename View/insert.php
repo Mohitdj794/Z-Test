@@ -1,19 +1,33 @@
 <?php
 require_once "../connection.php";
-
-class insertData extends Connection{
-    function dataInsert($password){
-        $hashed_password=password_hash($password, PASSWORD_BCRYPT);
-        $sql = "INSERT INTO userLogin(username,email,pass_word,firstName,lastName)
-        VALUES ('{$_POST['name1']}','{$_POST['mail1']}','{$hashed_password}','{$_POST['first']}','{$_POST['last']}')";
-         if($this->con->query($sql)){
-            header("Location:../homepage.html");
+class insertData extends Conn{
+    function dataInsert($password,$username,$email,$first,$last){
+      try{  
+      $hashed_password=password_hash($password, PASSWORD_BCRYPT);
+        $result = $this->con->insert(array(
+         'username' => "{$username}",
+         'email' => "{$email}",
+         'pass_word' => "{$hashed_password}",
+         'firstName' => "{$first}",
+         'lastName' => "{$last}"
+     ))
+     ->into('userLogin');
+     if($result){
+      header("Location:/Z-Test/homepage.html");
+     }
+     }
+    catch(PDOException $e){
+         echo "<script>var a = confirm('email already exist')
+         if(a==true){
+          window.location = '/Z-Test/homepage.html';
          }
          else{
-            echo "error in inserting the data".$con->error;
+          window.location = '/Z-Test/homepage.html';
          }
-    }   
+         </script>";
+    }
+     }
 }
 $conn3 = new insertData();
-$conn3->dataInsert($_POST['psw1'])
+$conn3->dataInsert($_POST['psw1'],$_POST['name1'],$_POST['mail1'],$_POST['first'],$_POST['last']);
 ?>
