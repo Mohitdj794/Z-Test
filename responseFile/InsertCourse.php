@@ -14,7 +14,7 @@ if($resp){
 catch(PDOException $e){
 
 //    $x= "{'result':'The course {$_POST['name']} is alredy Existed'} ";
-$x=' {"result":"The Corse is alredy Existed please change the course name"} ';
+$x=' {"result":"The Course is already Existed please change the course name"} ';
    echo json_encode($x);
 }
 
