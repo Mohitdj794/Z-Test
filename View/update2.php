@@ -1,10 +1,16 @@
 <?php
 session_start();
 require_once "../connection.php";
-class Query2 extends Connection{
+class Query2 extends Conn{
     function updateData($first,$last){
-        $sql = "UPDATE userLogin SET firstName='$first',lastName='$last' where username='{$_SESSION['name']}'";
-        if($this->con->query($sql)){
+        // $sql = "UPDATE userLogin SET firstName='$first',lastName='$last' where username='{$_SESSION['name']}'";
+        $result = $this->con->update('userLogin')
+             ->where('username')->is($_SESSION['name'])
+             ->set(array(
+                'firstName' => "$first",
+                'lastName' => "$last",
+             ));
+        if($result){
             header("Location:sample.php");
           }
           else{

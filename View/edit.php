@@ -47,15 +47,19 @@
 <div class='form1'>
 <?php
 require_once "../connection.php";
-class Query extends Connection{
+class Query extends Conn{
 public function editData($name){
-    $sql = "SELECT * FROM userLogin where username='{$name}'";
-    $result = $this->con->query($sql);
-    $row = $result->fetch_assoc();
-    echo "<form class='form2' action=\"update2.php\" method=\"post\"><label>firstname:</label><input type='text' class='first1' value='{$row['firstName']}' name='f1'><br/><br/>
-          <label>lastname:</label><input type='text' class='last1' value='{$row['lastName']}' name='l1'><br/><br/>
-          <label>username:</label><input type='text' class='usr1' value='{$row['username']}' name='un1' disabled><br/><br/>
-          <label>email:</label><input type='email' class='eml1' value='{$row['email']}'  name='eml1' disabled><br><br><button type='submit'>update</button></form>";
+    // $sql = "SELECT * FROM userLogin where username='{$name}'";
+
+    $result =  $result = $this->con->from('userLogin')
+    ->where('username')->is($name)
+    ->select()
+    ->all();
+    $row = json_decode(json_encode($result),true);
+    echo "<form class='form2' action=\"update2.php\" method=\"post\"><label>firstname:</label><input type='text' class='first1' value='{$row[0]['firstName']}' name='f1'><br/><br/>
+          <label>lastname:</label><input type='text' class='last1' value='{$row[0]['lastName']}' name='l1'><br/><br/>
+          <label>username:</label><input type='text' class='usr1' value='{$row[0]['username']}' name='un1' disabled><br/><br/>
+          <label>email:</label><input type='email' class='eml1' value='{$row[0]['email']}'  name='eml1' disabled><br><br><button type='submit'>update</button></form>";
    }
 }
 ?>
