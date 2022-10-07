@@ -1,28 +1,44 @@
 <?php
 
+use LDAP\Result;
+
 require_once '../connection.php';
 
 class Query extends Conn
 {
-    // properties 
+    
     protected $table;
-    public function conn(){
-        $result = $this->con->from('userLogin')
-             ->select()
-             ->all();
-             print_r($result);
+    public function conn($id){
+     
+
+         $x="";
+        $result = $this->con->from('Test_Question')
+        ->where('Question_id')->is(89)
+         ->select()
+         ->all();
+         
+         foreach ($result as $user) {
+        $x= $user->Test_id;
+        }
+       echo $x;
+
+        
     }
+
+    
     public function displayThis()
     {
 
-        $sql = "SELECT * FROM Test_Title";
+        $result =  $this->con->from('Test_Title')
+                     ->select()
+                     ->all();
+                     $object = json_decode(json_encode($result), true);
 
-        $result = $this->con->query($sql);
-
-        if ($result->num_rows > 0) {
-            $str = '';
-
-            while ($row = $result->fetch_assoc()) {
+          $str="";
+ 
+               foreach ($object as $key => $row) {
+                # code...
+                       
                 $str .= "<tr>
                 <td>{$row['TestTitle']}</td>
                 <td>{$row['TestDuration']} min</td>
@@ -30,38 +46,54 @@ class Query extends Conn
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
                 <td><a class=\"delete\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
             </tr>";
-            }
-            return $str;
-        } else {
-            echo "result 0";
-        }
-    }
-
-   
+            
+            
+      }
+      return $str;
+    }   
 
 
     public function DeleteThis($d)
     {
         $d1 = (int)$d;
-        $sql = "DELETE From Test_Title where Test_id={$d1}";
-        if ($this->con->query($sql)) {
-            header("LOCATION:/Z-Test/View/ViewCourse.php");
-        } else {
-            echo "Test Data are here so you can't Delete the Course";
+        $result = $this->con->from('Test_Title')
+        ->where('Test_id')->is($d1)
+        ->delete();
+
+        if($result){
+            header('Location:/Z-Test/View/ViewCourse.php');
         }
-    }
+          else{
+            echo "fille";
+          }
+        }
+    
+    
 
 
-    public function CreatCourse($submit,$name,$time){
-        if(isset($submit)){
-        $sql="INSERT INTO Test_Title(TestTitle ,TestDuration)VALUES('{$name}','{$time}')";
-        if($this->con->query($sql)){
-             
-                header('Location:/Z-Test/View/ViewCourse.php');
-        }
-            echo "<p class='error' style='color:red ;margin-left: 38%;margin-top: 20px;'>The Course <strong>{$name}</strong>  is alredy created</p>";
-     }
+    public function CreatCourse($name,$time){
+           
+        $result = $this->con->insert(array(
+            'TestTitle' => "{$name}",
+            'TestDuration' => "{$time}"
+        ))
+        ->into('Test_Title');
+        return $result;
+        
+       
+    //    if($result) {
+    //     header('Location:/Z-Test/View/ViewCourse.php');
+            
+    //     }
+
+    //     else{
+    //     echo "<p class='error' style='color:red ;margin-left: 38%;margin-top: 20px;'>The Course <strong>'{$name}'</strong>  is alredy created</p>";
     }
+
+    
+     
+     
+    
 
 
     public function  AddTest($submit, $name, $id, $option, $Ans)
@@ -69,10 +101,13 @@ class Query extends Conn
 
         if (isset($submit)) {
 
-            $sql = "INSERT INTO Test_Question(Question,Test_id)VALUES('{$name}','{$id}')";
-            $this->con->query($sql);
-            $last_id = $this->con->insert_id;
-            echo $last_id;
+            $result = $this->con->insert(array(
+                'Question' => "$name",
+                'Test_id' => "$id"
+            ))
+            ->into('Test_Question');
+
+            $last_id = $this->con->from('Test_Question')->max('Question_id');
 
             $arr = $option;
             $count = 1;
@@ -83,10 +118,14 @@ class Query extends Conn
             }
 
             $exam = json_encode($result);
+            $result1 = $this->con->insert(array(
+                'Options' => "$exam",
+                'Answer' => "$Ans",
+                'Question_id'=>"$last_id"
+            ))
+            ->into('Test_Result');
 
-            $sql2 = "INSERT INTO Test_Result(Options,Answer,Question_id)Values('$exam','{$Ans}',$last_id)";
-
-            if ($this->con->query($sql2) == true); {
+            if ($result1 == true); {
                 header("LOCATION:/Z-Test/View/ViewCourse.php");
                 die();
             }
@@ -97,16 +136,30 @@ class Query extends Conn
     
                 public function ViewTest($id)
                 {
-                    $sql = "SELECT Test_Title.TestTitle,Test_Title.TestDuration,Test_Question.Question_id,Test_Question.Question,Test_Result.Options,Test_Result.Answer FROM Test_Title INNER JOIN Test_Question ON Test_Title.Test_id=Test_Question.Test_id INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Title.Test_id={$id}";
-            
+                    $result=$this->con->from('Test_Title')
+                    ->join('Test_Question',function($join){
+                    $join->on('Test_Title.Test_id','Test_Question.Test_id');
+                    })
+                    ->join('Test_Result',function($join){
+                        $join->on('Test_Question.Question_id','Test_Result.Question_id');
+                    })
+                    ->where('Test_Title.Test_id')->is($id)
+                    ->select()
+                    ->all(); 
+                     
+                    $object = json_decode(json_encode($result), true);
+
+
+
                     $i = 0;
-                    $result1 = $this->con->query($sql);
-                    $v = $result1->fetch_assoc();
-                    echo "<h1>{$v['TestTitle']}</h1> <br>";
-                    $result = $this->con->query($sql);
-                    if ($result->num_rows > 0) {
+                    $str1="";
+                   foreach ($object as $key => $v) {
+                    $str1= "<h1>{$v['TestTitle']}</h1> <br>";
+                   }
+                   echo $str1;
+    
             
-                        while ($row = $result->fetch_assoc()) {
+                        foreach ($object as $key => $row) {
             
                             $var = json_decode($row['Options'], true);
                             $str = "";
@@ -123,16 +176,23 @@ class Query extends Conn
                                 . "<a class=\"delet\" style=\"text-decoration:none\" href=\"EditQuestion.php?id={$row['Question_id']}\">Edit</a> <br> <br>";
                         }
                     }
-                }
+                
 
     public function EditTest($id)
     {
-        $sql = "SELECT Test_Question.Question,Test_Result.Options,Test_Result.Answer from Test_Question INNER JOIN Test_Result ON Test_Question.Question_id=Test_Result.Question_id where Test_Question.Question_id={$id}";
 
-        $result = $this->con->query($sql);
-        if ($result->num_rows > 0) {
+        $result = $this->con->from('Test_Question')
+        ->join('Test_Result', function($join){
+           $join->on('Test_Question.Question_id','Test_Result.Question_id');
+        })
+        ->where('Test_Question.Question_id')->is($id)
+        ->select()
+        ->all();
 
-            while ($row = $result->fetch_assoc()) {
+        $object = json_decode(json_encode($result), true);
+
+        foreach ($object as $key => $row) {
+        
                 $var = json_decode($row['Options'], true);
                 $str = "";
                 echo "<p><label>Question</label></p>
@@ -152,14 +212,20 @@ class Query extends Conn
                 echo "<p>Answer</p><input type='text' name='Answer' value='{$row['Answer']}'>";
             }
         }
-    }
+
+
+    
     public function UpdateTest($submit, $Question, $Answer, $id)
     {
 
         if (isset($submit)) {
 
-            $sql = "UPDATE Test_Question SET Question='{$Question}' where Question_id={$id}";
-            $this->con->query($sql);
+            $result = $this->con->update('Test_Question')
+            ->where('Question_id')->is($id)
+            ->set(array(
+               'Question' => "$Question"
+            ));
+            
 
             $obj = $_REQUEST;
             print_r($obj);
@@ -173,14 +239,26 @@ class Query extends Conn
             print_r($r);
 
 
-            $sql1 = "Select Test_id from Test_Question where Question_id={$id}";
-            $result = $this->con->query($sql1);
-            $x = $result->fetch_all(MYSQLI_ASSOC);
-            print_r($x);
-            $sql2 = "UPDATE Test_Result SET Options='$r',Answer= '{$Answer}' where Question_id={$id}";
+            $x="";
+             $result3 = $this->con->from('Test_Question')
+             ->where('Question_id')->is(89)
+              ->select()
+              ->all();
+         
+               foreach ($result3 as $user) {
+               $x= $user->Test_id;
+                 }
+               echo $x;
 
-            if ($this->con->query($sql2) == true); {
-                header("LOCATION:view.php?id={$x[0]["Test_id"]}");
+            $result1 = $this->con->update('Test_Result')
+            ->where('Question_id')->is($id)
+            ->set(array(
+            'Options'  =>"$r",
+            'Answer' =>  "$Answer"
+                ));
+
+            if ($result1 == true); {
+                header("LOCATION:view.php?id={$x}");
                 die();
             }
             echo "error";
@@ -189,27 +267,38 @@ class Query extends Conn
 
 
     public function SearchCourse($search)
-    {
-        $sql = "SELECT * FROM Test_Title WHERE TestTitle LIKE '{$search}%' ";
-        $result = $this->con->query($sql);
-
-        if ($result->num_rows > 0) {
-            $str = '';
-
-            while ($row = $result->fetch_assoc()) {
-                $str .= "<tr>
-                        <td>{$row['TestTitle']}</td>
-                        <td>{$row['TestDuration']} min</td>
-                        <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
-                        <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
-                        <td><a class=\"delete\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
-                    </tr>";
-            }
-            return $str;
-        } else {
-            echo "result 0";
+    {  
+        $result = $this->con->from('Test_Title')
+        ->where('TestTitle')->like("{$search}%")
+        ->select()
+        ->all();
+          
+        if($result==[]){
+            echo "Zero Result";
+          }
+          
+          else{
+         $object = json_decode(json_encode($result), true);
+    
+              $str="";
+     
+                   foreach ($object as $key => $row) {
+                    # code...
+                           
+                    $str .= "<tr>
+                    <td>{$row['TestTitle']}</td>
+                    <td>{$row['TestDuration']} min</td>
+                    <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
+                    <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
+                    <td><a class=\"delete\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
+                </tr>";
+                
+                
+          }
+          return $str;
         }
-    }
+        }  
+    
 
     // User return Exam data add fetch 
     // add data table name and array of data;
