@@ -1,5 +1,6 @@
 <?php
-
+/**
+ * This require @require */ 
 require '../vendor/autoload.php';
 use Opis\Database\Database;
 use Opis\Database\Connection;
@@ -12,9 +13,9 @@ class Conn
   private $database = "z_Test";
   protected $con;
 
-  public function __construct()
+  public function __construct() 
   {
-          $connection = new Connection(
+        $connection = new Connection(
             "mysql:host=$this->serverName;dbname=$this->database", 
             "$this->userName", 
             "$this->password"
