@@ -7,11 +7,15 @@
     <link href="/Z-Test/assets/img/download.png" rel="icon">
 </head>
 <style>
+body{
+  background-color:grey;
+}
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 1000px;
   top: 50px;
+  left:80px;
   position: relative;
 }
 h1{

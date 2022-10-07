@@ -7,11 +7,15 @@
         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 </head>
 <style>
+body{
+  background-color:grey;
+}
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 1000px;
   top: 50px;
+  left: 80px;
   position: relative;
 }
 h1{

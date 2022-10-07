@@ -6,7 +6,7 @@
 </head>
 <style>
     body{
-        background-color:darkgrey;
+        background-color:grey;
     }
     .form1{
         width:500px;
@@ -41,6 +41,10 @@
         left:40%;
         top:20px;
         position: relative;
+        border-radius:7px;
+    }
+    button:hover{
+        background-color:red;
     }
     </style>
 <body>
@@ -59,7 +63,7 @@ public function editData($name){
     echo "<form class='form2' action=\"update2.php\" method=\"post\"><label>firstname:</label><input type='text' class='first1' value='{$row[0]['firstName']}' name='f1'><br/><br/>
           <label>lastname:</label><input type='text' class='last1' value='{$row[0]['lastName']}' name='l1'><br/><br/>
           <label>username:</label><input type='text' class='usr1' value='{$row[0]['username']}' name='un1' disabled><br/><br/>
-          <label>email:</label><input type='email' class='eml1' value='{$row[0]['email']}'  name='eml1' disabled><br><br><button type='submit'>update</button></form>";
+          <label>email:</label><input type='email' class='eml1' value='{$row[0]['email']}'  name='eml1' disabled><br><br><button class='btn' 'type='submit'>Update</button></form>";
    }
 }
 ?>

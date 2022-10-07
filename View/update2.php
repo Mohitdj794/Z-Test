@@ -10,12 +10,7 @@ class Query2 extends Conn{
                 'firstName' => "$first",
                 'lastName' => "$last",
              ));
-        if($result){
             header("Location:sample.php");
-          }
-          else{
-             echo "error in inserting the data".$con->error;
-          }
     }
 }
 $conn = new Query2();
