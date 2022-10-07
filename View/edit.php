@@ -53,8 +53,6 @@
 require_once "../connection.php";
 class Query extends Conn{
 public function editData($name){
-    // $sql = "SELECT * FROM userLogin where username='{$name}'";
-
     $result =  $result = $this->con->from('userLogin')
     ->where('username')->is($name)
     ->select()

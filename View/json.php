@@ -40,6 +40,7 @@ h1{
 }
 </style>
 <body>
+  <h1>Test-History</h1>
 <table id="customers">
   <tr>
     <th>TestTitle</th>

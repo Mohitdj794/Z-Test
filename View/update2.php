@@ -3,7 +3,6 @@ session_start();
 require_once "../connection.php";
 class Query2 extends Conn{
     function updateData($first,$last){
-        // $sql = "UPDATE userLogin SET firstName='$first',lastName='$last' where username='{$_SESSION['name']}'";
         $result = $this->con->update('userLogin')
              ->where('username')->is($_SESSION['name'])
              ->set(array(
