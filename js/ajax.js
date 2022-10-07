@@ -18,6 +18,7 @@ function ajax (url,data,method){
             console.log(error);
         }
     })
+    // Ajaxdata = JSON.parse(Ajaxdata) ;
     return Ajaxdata;
     }
     else{

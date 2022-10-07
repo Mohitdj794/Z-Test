@@ -19,7 +19,7 @@ session_start();
 
     // count Question length 
     $countQuestion = count($arrAns);
- 
+    
     // Start Time;
     $startTime = $do["startTime"];
 
@@ -40,11 +40,11 @@ session_start();
     $answerChoosed = json_encode($arrOption);
 
     // prepare all data into insert formate;
-    $name_user = $_SESSION['name'];
+//     $name_user = $_SESSION['name'];
     $prepareTable1Date = [
           "answerChoosed"=>$answerChoosed,
           "examTitle"=>$do["examTitle"],
-          "userName"=>$name_user
+          "userName"=>$_SESSION['name']
     ];   
     
     if(!empty($prepareTable1Date)){
@@ -65,8 +65,8 @@ session_start();
     $lastID1 = $objToAddData->addExamResult("result",$prepareTable2Date);
 
     $result = $objToAddData->singleRowDataFromResult("result","id",$lastID1);
-    $result["name"] = $_SESSION['name'];
-     $result = json_encode($result);
+    $result["name"] = $_SESSION["name"];
+     $result = json_encode($result,true);
      echo $result;                                
      exit();
     }
