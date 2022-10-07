@@ -7,11 +7,15 @@
     <link href="/Z-Test/assets/img/download.png" rel="icon">
 </head>
 <style>
+body{
+  background-color:grey;
+}
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 1000px;
   top: 50px;
+  left:80px;
   position: relative;
 }
 h1{
@@ -36,6 +40,7 @@ h1{
 }
 </style>
 <body>
+  <h1>Test-History</h1>
 <table id="customers">
   <tr>
     <th>TestTitle</th>
@@ -47,6 +52,7 @@ h1{
     require_once '../Class/Query.php';
     $UserExamDetail = new Query();
     $result = $UserExamDetail->fetchUserDetailFromExamDetail($_SESSION['name']);
+    $result = json_decode(json_encode($result),true);
     if ($result == []){
       echo "<script>$('table').hide() </script> <h1>You Didn't Attend Any Test<h1>";
     }

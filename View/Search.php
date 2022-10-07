@@ -48,8 +48,6 @@
     $search1=new Query();
     echo $search1->SearchCourse($_GET['search']);
     
-    
-
     ?>
 </table>
 

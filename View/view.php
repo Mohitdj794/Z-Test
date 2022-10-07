@@ -8,11 +8,12 @@
 <body>
  
     <div class="view" >
+        <a href="./ViewCourse.php" class="aTag">Go Back</a>
         <div class="data">
     <?php
     require_once "../Class/Query.php";
 
-    $view=new Query();
+    $view=new Query();  
     $view->ViewTest($_GET['id']);
 
     
