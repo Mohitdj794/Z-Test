@@ -45,6 +45,9 @@ class Query extends Conn
         return $result;
     }
 
+
+
+
     public function  AddTest($submit, $name, $id, $option, $Ans)
     {
 
@@ -67,20 +70,35 @@ class Query extends Conn
             }
 
             $exam = json_encode($result);
-            $result1 = $this->con->insert(array(
-                'Options' => "$exam",
-                'Answer' => "$Ans",
-                'Question_id' => "$last_id"
-            ))
-                ->into('Test_Result');
 
-            if ($result1 == true); {
-                header("LOCATION:/Z-Test/View/ViewCourse.php");
-                die();
+
+
+           
+
+           
+            foreach ($arr as $key1=> $val) {
+                if($val==$Ans){
+                    $result1 = $this->con->insert(array(
+                        'Options' => "$exam",
+                        'Answer' => "$Ans",
+                        'Question_id' => "$last_id"
+                    ))
+                        ->into('Test_Result');
+                    header("LOCATION:/Z-Test/View/ViewCourse.php");
+                }
+                }
+                
             }
-            echo "error";
+            echo "The answer is in correct";
+            echo '<script>alert("Answer is incorrect")</script>';
+            
         }
-    }
+       
+    
+
+
+
+
 
     public function ViewTest($id)
     {
