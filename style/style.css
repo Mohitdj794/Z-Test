@@ -6,8 +6,8 @@
 }
 
 .container{
-  width: 100vw;
-  height: 90vh;
+  width: 100%;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,10 +16,11 @@
     width: 90%;
     height: 90%;
     box-shadow: 0px 0px 1px 1px black;
-    padding-top: 40px;
     position: relative;
+    padding: 20px;
+    margin-top: 30px;
 }
-.container .time {
+.container .time {  
     font-size: 30px;
     padding: 20px;
 }
@@ -112,7 +113,7 @@ input[type='radio']:checked:after {
 #submit{
     color: whitesmoke!important;
     position: absolute;
-    bottom: 40%;
+    bottom: 20%;
     right: 10%;
     padding: 20px 30px;
     background-color: rgb(79, 79, 79);
@@ -121,6 +122,7 @@ input[type='radio']:checked:after {
     border-radius: 20px;
     cursor: pointer;
     z-index: 30;
+    display: block;
 }
 *::first-letter{
     text-transform: uppercase;
@@ -159,11 +161,11 @@ input[type='radio']:checked:after {
     background-image: linear-gradient(rgba(0, 225, 255, 0.374),rgba(168, 241, 251, 0.926),rgba(121, 206, 162, 0.869));
 }
 
-header {
+.header {
     width: 100%;
     height: auto;
 }
-header h2 {
+.header h2 {
     color: white;
     background-color: black!important;
     padding: 20px 0px;
