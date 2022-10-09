@@ -14,7 +14,14 @@
     <link rel="stylesheet" href="./style/style.css">
 </head>
 
-<body>
+<body oncontextmenu="return false">
+    <script>
+        history.pushState(null, null, document.URL);
+window.addEventListener('popstate', function () {
+    history.pushState(null, null, document.URL);
+});
+
+    </script>
   <header>
     <h2>Z-Test</h2> 
   </header>
