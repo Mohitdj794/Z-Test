@@ -9,9 +9,9 @@ if(empty($_SESSION['name'])){
 <head>
     <title>DashBoard</title>
     <link href="/Z-Test/assets/img/download.png" rel="icon">
-</head>
 <link href="../assets/css/style2.css" rel="stylesheet">
- <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+</head>
  <body>
  <script>
         history.pushState(null, null, document.URL);
