@@ -18,7 +18,5 @@ function Aajax(){
     return data;
 }
 dataRender(dataRenderExam);
-showSingleQuestion(dataRenderExam.length);
+showSingleQuestion(Object.keys(dataRenderExam).length-1);
 renderFormSubmit(dataRenderExam);
-
-    

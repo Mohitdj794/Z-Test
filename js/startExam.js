@@ -4,8 +4,23 @@ function dataRender(result){
     console.log(result)
     var options='',Durations;
     var localvalue,localVariable;
+    const TestTitle = result[0]["TestTitle"];
+   
     let Duration = result[0]["TestDuration"];
-    console.log(Duration);
+    let examName = localStorage.getItem("exam");
+    if (examName !== null){
+        if(examName.includes(TestTitle) && examName.includes(result["name"])){
+          localStorage.clear();
+          localStorage.setItem("exam",examName);    
+        window.location= "./View/sample.php";
+        process.exit();
+        }
+    }
+    if (result["name"] == null || undefined){
+        localStorage.clear();
+        window.location= "./homepage.html";
+        
+    }
     if (localStorage.getItem('Duration') == undefined){
         Durations = new Date().getTime() + Duration * 60 * 1000;
         localStorage.setItem('Duration',Durations);
@@ -14,11 +29,10 @@ function dataRender(result){
     else{
         Timer(localStorage.getItem('Duration'));
     }
-    const TestTitle = result[0]["TestTitle"];
+    
     let data=`<h3>${TestTitle}</h3>`;
     let count = 1,opt=1;
-    for (let i=0; i<result.length;i++){
-        console.log(typeof result[i]["Options"]);
+    for (let i=0; i< Object.keys(result).length-1;i++){
             options =JSON.parse(result[i]["Options"]);
             data +=  `<div class="question ${count}"><p class="para">${count}. ${result[i]["Question"]}</p><br>`;
             localVariable = `option${opt}`;

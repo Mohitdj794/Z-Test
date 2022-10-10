@@ -14,25 +14,17 @@
     <link rel="stylesheet" href="./style/style.css">
 </head>
 
-<body>
-<!-- 
+<body oncontextmenu="return false">
     <script>
-        if( $("#submit").click() == true){
-                $("#renderForm").submit();            
-        }
-        else if ($('#userPage').click() == true){
-           return true;
-        }
-        else{
-         window.onbeforeunload = function() {
-               return "If you reload this page you loose the data";
-           }
+        history.pushState(null, null, document.URL);
+window.addEventListener('popstate', function () {
+    history.pushState(null, null, document.URL);
+});
 
-        }   
-   </script> -->
-  <header>
+    </script>
+  <div class="header">
     <h2>Z-Test</h2> 
-  </header>
+  </div>
     <div class="container">
             <div class="inner-container">
               
