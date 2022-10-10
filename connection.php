@@ -28,10 +28,10 @@ use Opis\Database\Connection;
  */
 class Conn
 {
-  private $serverName = "localhost";
-  private $userName = "root";
-  private $password = "Viratkohli18@";
-  private $database = "z_Test";
+  private $_serverName = "localhost";
+  private $_userName = "root";
+  private $_password = "Viratkohli18@";
+  private $_database = "z_Test";
   protected $con;
 
     /**
