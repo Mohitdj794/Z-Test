@@ -1,5 +1,6 @@
 import { addData } from './localstorageSaveData.js';
 function showSingleQuestion(result) {
+    console.log(result);
     if (result == 1) {
         $(`.question.${1}`).show();
         $('#prev').hide();

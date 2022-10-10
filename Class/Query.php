@@ -1,7 +1,41 @@
 <?php
+/**
+ * Require use to create the connection
+ * 
+ * PHP version 7.4.3
+ * 
+ * @category  PHP
+ * @package   WordPress_Custom_Fields_Permalink
+ * @author    vignesh <vignesh@ziffity.com>
+ * @copyright 2014 Ziffity
+ * @license   git@github.com:Mohitdj794/Z-Test.git git
+ * @link      http://pear.php.net/package/PHP_CodeSniffer 
+ */
+
 require '../connection.php';
+
+/**
+ * This is the base class of data query 
+ * All the function like add,delete,insert etc...
+ * 
+ * PHP version 7.4.3
+ * 
+ * @category  PHP
+ * @package   WordPress_Custom_Fields_Permalink
+ * @author    vignesh <vignesh@ziffity.com>
+ * @copyright 2014 Ziffity
+ * @license   git@github.com:Mohitdj794/Z-Test.git git
+ * @link      http://pear.php.net/package/PHP_CodeSniffer 
+ */
+
 class Query extends Conn
 {
+
+    /**
+     * Following this function to display the
+     * 
+     * @return string
+     */
     public function displayThis()
     {
         $result =  $this->con->from('Test_Title')
@@ -21,6 +55,13 @@ class Query extends Conn
         return $str;
     }
 
+    /**
+     * Following this function to 
+     * 
+     * @param $d get id to delete the paticular row
+     * 
+     * @return ""
+     */
     public function DeleteThis($d)
     {
         $d1 = (int)$d;
@@ -35,16 +76,32 @@ class Query extends Conn
         }
     }
 
+    /**
+     * Following this function to
+     * 
+     * @param $name 
+     * @param $time 
+     * 
+     * @return void
+     */
     public function CreatCourse($name, $time)
     {
-        $result = $this->con->insert(array(
-            'TestTitle' => "{$name}",
-            'TestDuration' => "{$time}"
-        ))
+        $result = $this->con->insert(array('TestTitle' => "{$name}",'TestDuration' => "{$time}"))
             ->into('Test_Title');
         return $result;
     }
 
+    /**
+     * Following this function to
+     * 
+     * @param $submit 
+     * @param $name 
+     * @param $id 
+     * @param $option 
+     * @param $Ans 
+     * 
+     * @return ""
+     */
     public function  AddTest($submit, $name, $id, $option, $Ans)
     {
 
@@ -67,11 +124,7 @@ class Query extends Conn
             }
 
             $exam = json_encode($result);
-            $result1 = $this->con->insert(array(
-                'Options' => "$exam",
-                'Answer' => "$Ans",
-                'Question_id' => "$last_id"
-            ))
+            $result1 = $this->con->insert(array('Options' => "$exam",'Answer' => "$Ans",'Question_id' => "$last_id"))
                 ->into('Test_Result');
 
             if ($result1 == true); {
@@ -82,12 +135,18 @@ class Query extends Conn
         }
     }
 
+    /**
+     * Following this function to
+     * 
+     * @param $id 
+     * 
+     * @return ""
+     */
     public function ViewTest($id)
     {
-        $result = $this->con->from('Test_Title')
-            ->join('Test_Question', function ($join) {
+        $result = $this->con->from('Test_Title')->join('Test_Question', function ($join) {
                 $join->on('Test_Title.Test_id', 'Test_Question.Test_id');
-            })
+        })
             ->join('Test_Result', function ($join) {
                 $join->on('Test_Question.Question_id', 'Test_Result.Question_id');
             })
@@ -116,6 +175,13 @@ class Query extends Conn
         }
     }
 
+    /**
+     * Following this function to
+     * 
+     * @param $id 
+     * 
+     * @return ""
+     */
     public function EditTest($id)
     {
         $result = $this->con->from('Test_Question')
@@ -143,6 +209,16 @@ class Query extends Conn
         }
     }
 
+    /**
+     * Following this function to
+     * 
+     * @param $submit 
+     * @param $Question 
+     * @param $Answer  
+     * @param $id 
+     * 
+     * @return void
+     */
     public function UpdateTest($submit, $Question, $Answer, $id)
     {
         if (isset($submit)) {
@@ -184,6 +260,13 @@ class Query extends Conn
         }
     }
 
+    /**
+     * Following this function to
+     * 
+     * @param $search 
+     * 
+     * @return void
+     */
     public function SearchCourse($search)
     {
         $result = $this->con->from('Test_Title')
@@ -207,9 +290,18 @@ class Query extends Conn
             return $str;
         }
     }
-    // User return Exam data add fetch 
-    // add data table name and array of data;
 
+
+
+    /**
+     * User return Exam data add fetch 
+     * add data table name and array of data;
+     * 
+     * @param $table which table the data is inserted
+     * @param $data  array of data it have key and value
+     * 
+     * @return int
+     */
     public function addExamResult(string $table, array $data)
     {
         if ($table == "examMaintain") {
@@ -229,8 +321,18 @@ class Query extends Conn
             echo "Error: " . "<br>" . $this->con->error;
         }
     }
-    // fetch single data only result table
 
+
+
+    /**
+     * Fetch single data only result table
+     * 
+     * @param $table also table name
+     * @param $row   coloum name
+     * @param $id    the value
+     * 
+     * @return mixed
+     */
     public function singleRowDataFromResult(string $table, string $row, int $id)
     {
         $result = $this->con->from($table)
@@ -240,22 +342,42 @@ class Query extends Conn
         return $result;
     }
 
-    // this method get the userName to return the data what are the exam he/she taken and result
 
+    
+    /**
+     * Following this function to
+     * 
+     * @param $name the userName use to fetch the result
+     *  
+     * @return mixed
+     */
     public function fetchUserDetailFromExamDetail($name)
     {
         $result = $this->con->from('examMaintain')
-            ->join('result', function ($join) {
-                $join->on('examMaintain.ID', 'result.examMaintain_id');
-            })
-            ->where('examMaintain.userName')->is($name)
-            ->select(['examMaintain.examTitle', 'result.result', 'result.score', 'result.startTime', 'result.endTime', 'result.date'])
+            ->join(
+                'result', 
+                function ($join) {
+                        $join->on('examMaintain.ID', 'result.examMaintain_id');
+                }
+            )
+            ->where(
+                'examMaintain.userName'
+            )
+                ->is($name)->select(
+                    ['examMaintain.examTitle', 'result.result', 'result.score', 'result.startTime', 'result.endTime', 'result.date']
+                )
             ->all();
 
         return $result;
     }
-    // fetch data from Test_Title ;
 
+
+
+    /**
+     * Fetch data from Test_Title ;
+     * 
+     * @return array
+     */
     public function testTitleData()
     {
         $result = $this->con->from('Test_Title')
@@ -263,19 +385,41 @@ class Query extends Conn
             ->all();
         return $result;
     }
-    // fetch particular exam detail
 
+
+
+    /**
+     * Fetch particular exam detail
+     * 
+     * @param $id the id use to fetch the result
+     * 
+     * @return mixed
+     */
     public function fetchDataFromExamDetail($id)
     {
         $result = $this->con->from('Test_Title')
-            ->join('Test_Question', function ($join) {
-                $join->on('Test_Title.Test_id', 'Test_Question.Test_id');
-            })
-            ->join('Test_Result', function ($join) {
-                $join->on('Test_Question.Question_id', 'Test_Result.Question_id');
-            })
+            ->join(
+                'Test_Question', function ($join) {
+                     $join->on('Test_Title.Test_id', 'Test_Question.Test_id');
+                }
+            )
+            ->join(
+                'Test_Result', function ($join) {
+                    $join->on(
+                        'Test_Question.Question_id', 'Test_Result.Question_id'
+                    );
+                }
+            )
             ->where('Test_Title.Test_id')->is($id)
-            ->select(['Test_Title.TestTitle', 'Test_Title.TestDuration', 'Test_Question.Question_id', 'Test_Question.Question', 'Test_Result.Options', 'Test_Result.Answer'])
+            ->select(
+                ['Test_Title.TestTitle', 
+                'Test_Title.TestDuration', 
+                'Test_Question.Question_id', 
+                'Test_Question.Question', 
+                'Test_Result.Options', 
+                'Test_Result.Answer'
+                ]
+            )
             ->all();
 
         return $result;
