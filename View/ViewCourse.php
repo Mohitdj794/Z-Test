@@ -43,6 +43,7 @@ session_start();
     <th></th>
 
   </tr>
+  
 <?php
     require_once "../Class/Query.php";
    $objc = new Query();

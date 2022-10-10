@@ -70,11 +70,6 @@ class Query extends Conn
             }
 
             $exam = json_encode($result);
-
-
-
-           
-
            
             foreach ($arr as $key1=> $val) {
                 if($val==$Ans){
@@ -90,7 +85,6 @@ class Query extends Conn
                 
             }
             echo "The answer is in correct";
-            echo '<script>alert("Answer is incorrect")</script>';
             
         }
        
