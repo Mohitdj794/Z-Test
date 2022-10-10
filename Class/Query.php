@@ -102,10 +102,10 @@ class Query extends Conn
      * 
      * @return ""
      */
-    public function  AddTest($submit, $name, $id, $option, $Ans)
+    public function  AddTest($name, $id, $option, $Ans)
     {
 
-        if (isset($submit)) {
+        
 
             $result = $this->con->insert(array(
                 'Question' => "$name",
@@ -124,6 +124,7 @@ class Query extends Conn
             }
 
             $exam = json_encode($result);
+
            
             foreach ($arr as $key1=> $val) {
                 if($val==$Ans){
@@ -133,12 +134,14 @@ class Query extends Conn
                         'Question_id' => "$last_id"
                     ))
                         ->into('Test_Result');
-                    header("LOCATION:/Z-Test/View/ViewCourse.php");
+                    // header("LOCATION:/Z-Test/View/ViewCourse.php");
+                    echo "inserted sucessfully";
+                    die();
                 }
                 }
-                
-            }
-            echo "The answer is in correct";
+                echo "The answer is not matched to the above options";
+            
+            
             
         }
        

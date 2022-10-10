@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="../style/Addq.css">
     <link href="/Z-Test/assets/img/download.png" rel="icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
 </head>
 <body>
 
@@ -49,7 +50,7 @@ jQuery(function($) {
 
 </script>
 
-<form action="AddTest.php" method="post">
+<form id="Add" method="post">
 <p class="question"> <label>Question</label></p>
 <textarea  name="name" class="Que" rows="10" cols="70"></textarea> <br>
 
@@ -72,10 +73,18 @@ jQuery(function($) {
 
   <div class="Ans">
    <label class="Ans1">Answer:</label></td>
-   <input type="text" name="Ans"  size="20">
+   <input type="text" name="Ans"  size="20"><br>
+   <span id="error"></span>
    </div>
    </div>
 
 <input type="submit" name="submit" class="sub">
 <input type="hidden" value="<?= $_GET["id"] ?>" name = "id">
 </form>
+
+
+<script src="../js/AddTest.js"></script>
+
+
+</body>
+</html>
