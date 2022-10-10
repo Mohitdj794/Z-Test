@@ -28,11 +28,11 @@ use Opis\Database\Connection;
  */
 class Conn
 {
-  private $serverName = "localhost";
-  private $userName = "root";
-  private $password = "Viratkohli18@";
-  private $database = "z_Test";
-  protected $con;
+    private $_serverName = "localhost";
+    private $_userName = "root";
+    private $_password = "Vignesh@21";
+    private $_database = "z_Test";
+    protected $con;
 
     /**
      * Construct create connection
