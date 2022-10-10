@@ -12,7 +12,7 @@ if(empty($_SESSION['name'])){
 </head>
 <link href="../assets/css/style2.css" rel="stylesheet">
  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<body>
+ <body>
 <div class="div1" id="div1">
 <header id="header1" class="header1">
       <h1 class="logo1"><a class="anc" href="sample.php">Z-TEST</a></h1>
