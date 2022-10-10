@@ -104,9 +104,6 @@ class Query extends Conn
      */
     public function  AddTest($name, $id, $option, $Ans)
     {
-
-        
-
             $result = $this->con->insert(array(
                 'Question' => "$name",
                 'Test_id' => "$id"
@@ -140,17 +137,7 @@ class Query extends Conn
                 }
                 }
                 echo "The answer is not matched to the above options";
-            
-            
-            
         }
-       
-    
-
-
-
-
-
     /**
      * Following this function to
      * 
@@ -337,8 +324,6 @@ class Query extends Conn
             echo "Error: " . "<br>" . $this->con->error;
         }
     }
-
-
 
     /**
      * Fetch single data only result table
