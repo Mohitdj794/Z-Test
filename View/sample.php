@@ -12,8 +12,8 @@ if(empty($_SESSION['name'])){
 </head>
 <link href="../assets/css/style2.css" rel="stylesheet">
  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<body>
-<script>
+ <body>
+ <script>
         history.pushState(null, null, document.URL);
 window.addEventListener('popstate', function () {
     history.pushState(null, null, document.URL);
