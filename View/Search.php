@@ -46,7 +46,7 @@
 
     require_once "../Class/Query.php";
     $search1=new Query();
-    echo $search1->SearchCourse($_GET['search']);
+    echo $search1->searchCourse($_GET['search']);
     
     ?>
 </table>

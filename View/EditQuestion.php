@@ -22,7 +22,7 @@
     require_once "../Class/Query.php";
 
       $edit=new Query();
-      $edit->EditTest($_GET['id']);
+      $edit->editTest($_GET['id']);
 
     ?>
     <br><input type="submit" class="button" name=" submit" value= "submit">

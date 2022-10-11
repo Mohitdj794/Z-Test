@@ -62,7 +62,7 @@ class Query extends Conn
      * 
      * @return ""
      */
-    public function DeleteThis($d)
+    public function deleteThis($d)
     {
         $d1 = (int)$d;
         $result = $this->con->from('Test_Title')
@@ -84,7 +84,7 @@ class Query extends Conn
      * 
      * @return void
      */
-    public function CreatCourse($name, $time)
+    public function creatCourse($name, $time)
     {
         $result = $this->con->insert(array('TestTitle' => "{$name}",'TestDuration' => "{$time}"))
             ->into('Test_Title');
@@ -102,7 +102,7 @@ class Query extends Conn
      * 
      * @return ""
      */
-    public function  AddTest($name, $id, $option, $Ans)
+    public function  addTest($name, $id, $option, $Ans)
     {
             $result = $this->con->insert(array(
                 'Question' => "$name",
@@ -145,7 +145,7 @@ class Query extends Conn
      * 
      * @return ""
      */
-    public function ViewTest($id)
+    public function viewTest($id)
     {
         $result = $this->con->from('Test_Title')->join('Test_Question', function ($join) {
                 $join->on('Test_Title.Test_id', 'Test_Question.Test_id');
@@ -185,7 +185,7 @@ class Query extends Conn
      * 
      * @return ""
      */
-    public function EditTest($id)
+    public function editTest($id)
     {
         $result = $this->con->from('Test_Question')
             ->join('Test_Result', function ($join) {
@@ -222,7 +222,7 @@ class Query extends Conn
      * 
      * @return void
      */
-    public function UpdateTest($submit, $Question, $Answer, $id)
+    public function updateTest($submit, $Question, $Answer, $id)
     {
         if (isset($submit)) {
             $result = $this->con->update('Test_Question')
@@ -270,7 +270,7 @@ class Query extends Conn
      * 
      * @return void
      */
-    public function SearchCourse($search)
+    public function searchCourse($search)
     {
         $result = $this->con->from('Test_Title')
             ->where('TestTitle')->like("{$search}%")
