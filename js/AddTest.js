@@ -1,4 +1,3 @@
-
 $(document).on("submit","#Add",function(e){
     e.preventDefault();
     var formdata = new FormData(this);

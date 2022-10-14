@@ -1,4 +1,3 @@
-
 function addData(num){
     var value,opt; 
         value = $(`input[type='radio'][name='option${num}']:checked`).val();

@@ -8,7 +8,7 @@ function Aajax(){
     var id = location.search;
     id = id.substring(4,id.length);
     var dataID = new FormData();
-    dataID.append("id",id);
+    dataID.append("id",id); 
     var today = new Date();
     if(localStorage.getItem("startTime") == undefined){
     const startTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -16,7 +16,7 @@ function Aajax(){
     }
     data = ajax('./responseFile/fetchExamData.php',dataID,"POST");
     return data;
-}
+}   
 dataRender(dataRenderExam);
 showSingleQuestion(Object.keys(dataRenderExam).length-1);
 renderFormSubmit(dataRenderExam);

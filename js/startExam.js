@@ -10,8 +10,8 @@ function dataRender(result){
     let examName = localStorage.getItem("exam");
     if (examName !== null){
         if(examName.includes(TestTitle) && examName.includes(result["name"])){
-          localStorage.clear();
-          localStorage.setItem("exam",examName);    
+        localStorage.clear();
+        localStorage.setItem("exam",examName);    
         window.location= "./View/sample.php";
         process.exit();
         }
@@ -29,7 +29,7 @@ function dataRender(result){
     else{
         Timer(localStorage.getItem('Duration'));
     }
-    
+
     let data=`<h3>${TestTitle}</h3>`;
     let count = 1,opt=1;
     for (let i=0; i< Object.keys(result).length-1;i++){

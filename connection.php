@@ -31,7 +31,7 @@ class Conn
   
     private $_serverName = "localhost";
     private $_userName = "root";
-    private $_password = "Ziffity@123";
+    private $_password = "Vignesh@21";
     private $_database = "z_Test";
     protected $con;
 
