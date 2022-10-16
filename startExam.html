@@ -33,10 +33,15 @@ window.addEventListener('popstate', function () {
             Minutes: <b id="minutes"></b>
             Seconds: <b id="seconds"></b> <span>Time Left</span>
         </div>
-        <form id="renderForm" method="POST">
+        <form id="renderForm" method="POST" data-bind="foreach: questionOption">
+            <!-- <p data-bind="text: Question"></p>
+            <input name="answer[]" type="radio" data-bind="checked: A, value: option1">
+            <input name="answer[]" type="radio" data-bind="checked: B, value: option2">
+            <input name="answer[]" type="radio" data-bind="checked: C, value: option3">
+            <input name="answer[]" type="radio" data-bind="checked: D, value: option4"> -->
+
             <input type="submit" id="submit" value="submit">
         </form>
-
         <div class="button">
             <button id="prev"><i class="material-icons">&#xe5cb;</i>prev</button>
             <button id="next">next<i class="material-icons">&#xe5cc;</i></button>

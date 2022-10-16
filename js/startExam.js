@@ -19,7 +19,6 @@ function dataRender(result){
     if (result["name"] == null || undefined){
         localStorage.clear();
         window.location= "./homepage.html";
-        
     }
     if (localStorage.getItem('Duration') == undefined){
         Durations = new Date().getTime() + Duration * 60 * 1000;
@@ -32,6 +31,7 @@ function dataRender(result){
 
     let data=`<h3>${TestTitle}</h3>`;
     let count = 1,opt=1;
+    
     for (let i=0; i< Object.keys(result).length-1;i++){
             options =JSON.parse(result[i]["Options"]);
             data +=  `<div class="question ${count}"><p class="para">${count}. ${result[i]["Question"]}</p><br>`;

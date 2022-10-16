@@ -29,11 +29,11 @@ function renderFormSubmit(result){
         if(response[0]["result"] == "pass"){ $result = "Congratulations" }
         else { $result = "Oops Better luck next time" }
         showResult = `<div class="showResultContainer"><h3>${$result}</h3> <h4>Your score ${response[0]["score"]}%</h4><a id="userPage" href="View/sample.php">Go to home</a></div>`
-        $(".container").hide();
+        $(".container").hide(); 
         $(".showResult").show();
         $(".showResult").html(showResult);
         localStorage.clear();
-        localStorage.setItem("exam",response["name"]+result[0]["TestTitle"]);
+        // localStorage.setItem("exam",response["name"]+result[0]["TestTitle"]);
         }
       })
     }

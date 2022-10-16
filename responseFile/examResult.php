@@ -57,7 +57,7 @@ if ($FindScore < 70) {
     // prepare all data into insert formate;
     // $name_user = $_SESSION['name'];
     $prepareTable1Date = [
-          "answerChoosed"=>$answerChoosed,
+          "chooseAnswer"=>$answerChoosed,
           "examTitle"=>$do["examTitle"],
           "userName"=>$_SESSION['name']
     ];   
