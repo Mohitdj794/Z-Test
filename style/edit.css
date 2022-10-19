@@ -66,10 +66,13 @@ input{
 .button{
   border-radius: 20px;
   width: 7%;
-  margin-top:10px;
+  margin-bottom:50px;
   
 }
 .button:hover{
     background-color:wheat;
     color:#734b6d;
+}
+#error{
+  color:red;
 }

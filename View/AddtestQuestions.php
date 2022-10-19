@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="../style/Addq.css">
     <link href="/Z-Test/assets/img/download.png" rel="icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src = "https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js"    
+      type = "text/javascript"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout-validation/2.0.4/knockout.validation.min.js"></script>
+      
     
 </head>
 <body>
@@ -20,68 +24,100 @@
 <?php
 include "connection.php";
 ?>
-<script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout-validation/2.0.4/knockout.validation.min.js"></script>
 
-jQuery(function($) {
-  var $traceContainer = $('#traces');
-  $('#add-button').click(function() {
-    var $div = $traceContainer.find('.trace:last').clone()
-    $div.find(`input[name='Option']`).val("");
-    $traceContainer.append($div);
-  });
-  
- 
-  
-});
-
-jQuery(function($) {
-  var $traceContainer = $('#traces');
-
-  $('#rm-button').click(function() {
-    var $div = $traceContainer.find('.trace:last').remove()
- 
-  });
-  
-  
-});
-  
-  
-  console.log(Option);
-
-</script>
-
-<form id="Add" method="post">
+<form data-bind="submit:handleSubmit" id="Add" method="post">
 <p class="question"> <label>Question</label></p>
-<textarea  name="name" class="Que" rows="10" cols="70"></textarea> <br>
-
-<button type="button" id="add-button" class="btn">+</button>
-<div id="traces">
-  <div class="trace">
-    
-      <table>
-        <tbody>
-          <tr>
-            <td><label>Option:</label></td>
-            <td><input for="ans" type="text" name="Option[]" class="Option" size="20">
-            </td>
-          </tr>
-        </tbody>
-      </table>
-  </div>
-</div>
-<button type="button" id="rm-button" class="btn">-</button>
+   <textarea data-bind="value:Question,valueUpdate:'afterkeydown'" name="name" class="Que" rows="10" cols="70"></textarea> <br>
+      
+   <div class="Ans">
+     <!-- ko foreach: ViewModel.values -->
+     <div class="fname" >
+        Option: <input id="opt"  name=Option[] data-bind="value: $data.value" placeholder="Option" contenteditable/>
+     </div>
+     <!-- /ko -->
+      
+     <div class="addBtn">
+     <button id="inc"  data-bind="click: ViewModel.addValue">+</button>
+     <button id="dec" data-bind="click: ViewModel.RemoveValue">-</button>
+   </div>
+   </div>
 
   <div class="Ans">
    <label class="Ans1">Answer:</label></td>
-   <input type="text" name="Ans"  size="20"><br>
-   <span id="error"></span>
+   <input   data-bind="value:Answer,valueUpdate:'afterkeydown'" id="Ans2"type="text" name="Ans"  size="20"><br>
+   
    </div>
    </div>
 
 <input type="submit" name="submit" class="sub">
 <input type="hidden" value="<?= $_GET["id"] ?>" name = "id">
 </form>
+<span data-bind="text:Insert " id="error"></span>
+<script>
 
+
+function CreateAccountViewModel(){
+
+    var self=this;
+
+       self.ViewModel = {
+        values: ko.observableArray([
+            {value: ko.observable('initial value')}
+        ]),
+        addValue: function(){
+            self.ViewModel.values.push({ value: ko.observable('')});
+           
+        },
+        RemoveValue:function(){
+            self.ViewModel.values.pop();
+        }
+    }
+    
+    self.Question = ko.observable("").extend({
+        required:true,
+        minLength:5,
+    });
+ 
+    self.Answer = ko.observable("").extend({
+        required:true,
+        minLength:1,
+       
+    });
+
+    self.ConfirmPassword = ko.observable().extend({areSame:{params:self.ViewModel.values, message: "Confirm password must match with the above password" }});;
+
+    self.handleSubmit = function(){
+        var errors = ko.validation.group(self);
+        if(errors().length > 0){
+            errors.showAllMessages();
+            return false;
+        }
+        var payload = {
+            firstname : self.firstName(),
+        }
+        console.log(payload);
+        
+    }   
+};
+
+ko.validation.rules['areSame'] = {
+    getValue: function (o) {
+        return (typeof o === 'function' ? o() : o);
+    },
+    validator: function (val, otherField) {
+        return val === this.getValue(otherField);
+    },
+    message: 'The fields must have the same value'
+};
+
+$(document).ready(function () {
+    ko.validation.registerExtenders();
+    ko.applyBindings(new CreateAccountViewModel(),document.getElementById("Add"));
+});
+
+  </script>
 
 <script src="../js/AddTest.js"></script>
 
