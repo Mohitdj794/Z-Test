@@ -53,8 +53,10 @@ p,textarea{
 }
 
 .structure{
-    margin-top:20px;
+    margin-top:50px;
     margin-left:40px;
+    position: relative;
+    left:20%;
 }
 .sub{
     margin-left:13%;
@@ -62,6 +64,8 @@ p,textarea{
     padding:7px;
     width:8%;
     border-radius:20px;
+    position: relative;
+    left:20%;
     
     
 
@@ -76,7 +80,6 @@ p,textarea{
 .question{
     margin-bottom: 10px;
     font-size: 2ch;
-    
     width:20%;
 }
 
@@ -101,6 +104,7 @@ p,textarea{
 }
 .Que{
     box-shadow:5px 5px 10px ;
+    margin-bottom:20px;
 }
 .Ans{
     padding:5px 3px 2px;
@@ -110,4 +114,26 @@ p,textarea{
 #error{
     color:red;
 }
+#opt,#Ans2{
+    padding:5px;
+}
+#inc,#dec{
+    padding:3px;
+    width: 22px;;
+}
 
+#inc:hover{
+    background-color: green;
+    color:aliceblue
+}
+
+#dec:hover{
+    background-color: rgb(246, 59, 26);
+    color:aliceblue
+}
+.validationMessage{
+   
+    color: red;
+    position: relative;
+    right:30%;
+}

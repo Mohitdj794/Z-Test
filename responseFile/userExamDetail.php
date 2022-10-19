@@ -11,6 +11,7 @@
  * @license   git@github.com:Mohitdj794/Z-Test.git git
  * @link      git@github.com:Mohitdj794/Z-Test.git
  */
+
     session_start();
     require_once '../Class/Query.php';
     $UserExamDetail = new Query();

@@ -1,14 +1,12 @@
-let AddTest;
-function Add1(data){
-   return this.Insert=ko.observable(data);
-
+function Add(data){
+    this.AddTest=ko.observable(data);
     }
-$(document).on("submit","#Add",function(e){
+$(document).on("submit","#Edit",function(e){
     e.preventDefault();
     var formdata = new FormData(this);
     $.ajax({
         type: "post",
-        url:"./AddTest.php", 
+        url:"./UpdateTest.php", 
         async:false,
         global:false,       
         data:formdata,
@@ -17,13 +15,14 @@ $(document).on("submit","#Add",function(e){
         dataType:"text",
         success: function (response) {
             Ajaxdata = response;
-            console.log(response);
-            if(response!=="inserted sucessfully"){
-                $("#error").html(response);
-                // ko.applyBindings(new Add1(response));
+            console.log(parseInt(response));
+            
+            if(response=="The Answer is not matched to the Options"){
+                ko.applyBindings(new Add(response));
+               
             }
             else{
-                window.location.href="/Z-Test/View/ViewCourse.php";
+                window.location.href=`/Z-Test/View/view.php?id=${response}`;
             }
         },
         error: function (request, error) {
@@ -31,6 +30,5 @@ $(document).on("submit","#Add",function(e){
             console.log(error);
         }
     })
-    ko.applyBindings(new Add1(response));
-})
 
+})

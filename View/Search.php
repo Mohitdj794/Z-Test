@@ -15,7 +15,7 @@
 <a href="#about">Home</a>
   
   
-  <a class="l" href="#contact">Log Out</a>
+ 
 
 </div>
 
