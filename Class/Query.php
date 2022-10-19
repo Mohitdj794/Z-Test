@@ -62,7 +62,7 @@ class Query extends Conn
      * 
      * @return ""
      */
-    public function DeleteThis($d)
+    public function deleteThis($d)
     {
         $d1 = (int)$d;
         $result = $this->con->from('Test_Title')
@@ -84,7 +84,7 @@ class Query extends Conn
      * 
      * @return void
      */
-    public function CreatCourse($name, $time)
+    public function creatCourse($name, $time)
     {
         $result = $this->con->insert(array('TestTitle' => "{$name}",'TestDuration' => "{$time}"))
             ->into('Test_Title');
@@ -102,11 +102,8 @@ class Query extends Conn
      * 
      * @return ""
      */
-    public function  AddTest($submit, $name, $id, $option, $Ans)
+    public function  addTest($name, $id, $option, $Ans)
     {
-
-        if (isset($submit)) {
-
             $result = $this->con->insert(array(
                 'Question' => "$name",
                 'Test_id' => "$id"
@@ -124,17 +121,23 @@ class Query extends Conn
             }
 
             $exam = json_encode($result);
-            $result1 = $this->con->insert(array('Options' => "$exam",'Answer' => "$Ans",'Question_id' => "$last_id"))
-                ->into('Test_Result');
 
-            if ($result1 == true); {
-                header("LOCATION:/Z-Test/View/ViewCourse.php");
-                die();
-            }
-            echo "error";
+           
+            foreach ($arr as $key1=> $val) {
+                if($val==$Ans){
+                    $result1 = $this->con->insert(array(
+                        'Options' => "$exam",
+                        'Answer' => "$Ans",
+                        'Question_id' => "$last_id"
+                    ))
+                        ->into('Test_Result');
+                    // header("LOCATION:/Z-Test/View/ViewCourse.php");
+                    echo "inserted sucessfully";
+                    die();
+                }
+                }
+                echo "The answer is not matched to the above options";
         }
-    }
-
     /**
      * Following this function to
      * 
@@ -142,7 +145,7 @@ class Query extends Conn
      * 
      * @return ""
      */
-    public function ViewTest($id)
+    public function viewTest($id)
     {
         $result = $this->con->from('Test_Title')->join('Test_Question', function ($join) {
                 $join->on('Test_Title.Test_id', 'Test_Question.Test_id');
@@ -182,7 +185,7 @@ class Query extends Conn
      * 
      * @return ""
      */
-    public function EditTest($id)
+    public function editTest($id)
     {
         $result = $this->con->from('Test_Question')
             ->join('Test_Result', function ($join) {
@@ -219,7 +222,7 @@ class Query extends Conn
      * 
      * @return void
      */
-    public function UpdateTest($submit, $Question, $Answer, $id)
+    public function updateTest($submit, $Question, $Answer, $id)
     {
         if (isset($submit)) {
             $result = $this->con->update('Test_Question')
@@ -267,7 +270,7 @@ class Query extends Conn
      * 
      * @return void
      */
-    public function SearchCourse($search)
+    public function searchCourse($search)
     {
         $result = $this->con->from('Test_Title')
             ->where('TestTitle')->like("{$search}%")
@@ -321,8 +324,6 @@ class Query extends Conn
             echo "Error: " . "<br>" . $this->con->error;
         }
     }
-
-
 
     /**
      * Fetch single data only result table

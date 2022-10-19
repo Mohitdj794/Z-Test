@@ -12,14 +12,16 @@
         <!-- fontawesome link -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./style/style.css">
+    <!-- js ko -->
+    <script src = "https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js" 
+type = "text/javascript"></script>
 </head>
-
-<body oncontextmenu="return false">
-    <script>
-        history.pushState(null, null, document.URL);
-window.addEventListener('popstate', function () {
+<body>
+     <script>
     history.pushState(null, null, document.URL);
-});
+      window.addEventListener('popstate', function () {
+      history.pushState(null, null, document.URL);
+        });
 
     </script>
   <div class="header">
@@ -29,22 +31,37 @@ window.addEventListener('popstate', function () {
             <div class="inner-container">
               
         <div class="time">
-           <span id="Hours">Hours: </span> <b id="hours"></b>
-            Minutes: <b id="minutes"></b>
-            Seconds: <b id="seconds"></b> <span>Time Left</span>
+           <span id="Hours">Hours: </span> <b id="hours" data-bind="text: hour"></b>
+            Minutes: <b id="minutes" data-bind="text: minutes"></b>
+            Seconds: <b id="seconds" data-bind="text: seconds"></b> <span>Time Left</span>
         </div>
-        <form id="renderForm" method="POST">
-            <input type="submit" id="submit" value="submit">
-        </form>
 
+        <form id="renderForm" method="POST">
+            <h3 data-bind="text: Title"></h3>
+            <div data-bind="foreach: questionOption"> 
+                <div data-bind="attr: { class: className},visible:'Bt'+($index()+1)">
+                    <p class="para" data-bind="text: Question"></p><br>
+                    <div data-bind="foreach: option">
+                        <input type="radio" data-bind="attr: { value: option1 , name: values} , checked: chosenItems">
+                        <label data-bind="text: option1"></label><br>
+                    </div>
+                </div>  
+            </div>
+
+            <input type="submit" id="submit" value="submit" data-bind="visible: leng() == show()">
+        </form>
         <div class="button">
-            <button id="prev"><i class="material-icons">&#xe5cb;</i>prev</button>
-            <button id="next">next<i class="material-icons">&#xe5cc;</i></button>
-        </div>  
+            <button id="prev" data-bind="click: prev ,enable: show() > 0"><i class="material-icons">&#xe5cb;</i>prev</button>
+            <button id="next" data-bind="click: next , disable: leng() == show()">next<i class="material-icons">&#xe5cc;</i></button>
+        </div>
     </div>
     </div>
     <div class="showResult">
-      
+        <div class="showResultContainer">
+            <h3 data-bind="text: result"></h3> 
+            <h4 data-bind="text: score"></h4>
+            <a id="userPage" href="View/sample.php">Go to Home</a>
+        </div>
     </div>
 <script src="./js/questionOption.js" type="module"></script> 
 </body>

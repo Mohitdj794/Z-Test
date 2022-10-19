@@ -14,7 +14,7 @@
     require_once "../Class/Query.php";
 
     $view=new Query();  
-    $view->ViewTest($_GET['id']);
+    $view->viewTest($_GET['id']);
 
     
     

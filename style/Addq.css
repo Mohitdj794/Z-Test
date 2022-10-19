@@ -107,4 +107,7 @@ p,textarea{
     margin-right: 55%;
     margin-top: 20px;;
 }
+#error{
+    color:red;
+}
 
