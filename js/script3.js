@@ -1,69 +1,58 @@
-$.validator.addMethod('mypass',function(value,element) {
-    return this.optional(element) || /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/.test(value);
-});
-$(document).ready(function () {
-    $("#Form2").validate({
-        rules:{
-        first:{
-            required:true,
-        },
-        last:{
-            required:true,
-        },
-        name1:{
-            required:true,
-        },
-        mail1:{
-            required:true,
-            email:true,
-           
-        },
-        psw1:{
-            required:true,
-            minlength:8,
-            mypass:true,
-            
-        },
-        cpsw:{
-             required:true,
-             equalTo:"#exampleInputPassword1"
-        }
-    },
-        messages:{
-            first:{
-                required:"please enter your firstname",
-            },
-            last:{
-                required:"please enter your lastname",
-            },
-            name1:{
-                required:"Please enter your name",
-            },
-            mail1:{
-                required:"please enter your email id",
-                email:"please enter valide email"
-
-            },
-            psw1:{
-                required:"please enter your password",
-                minlength:"password length must be 8",
-                mypass:"Password must contain one uppercase one lowercase one number and special charecter",
-            },
-            cpsw:{
-                required:"please match your password",
-                equalTo:"password doesnt match"
-            }
-        }, 
-        submitHandler: function(form) {
-            form.submit();
-        },
-        
-        highlight: function(element) {
-            $(element).css('background', '#ffdddd');
-        },
-        
-        unhighlight: function(element) {
-            $(element).css('background', '#ffffff');
-        }
+function CreateAccountViewModel(){
+    var self=this;
+    var checkPassword = function(val, other) {  
+        return val == other;  
+    }
+    self.firstName = ko.observable("").extend({
+        required:true,
+        minLength:5,
     });
+    self.lastName = ko.observable("").extend({
+        required:true,
+        minLength:2,
+    });
+    self.userName = ko.observable("").extend({
+        required:true,
+        minLength:6,
+    });
+    self.emailAddress = ko.observable("").extend({
+        required:true,
+        email:true,
+    });
+    self.password = ko.observable("").extend({
+        required:true,
+        minLength:8,
+        pattern: {
+            message: "Password must contain one uppercase one lowercase one number and special charecter",
+            params: /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/            
+        },
+        maxLength:10,
+    });
+    self.ConfirmPassword = ko.observable("").extend({areSame:{params: self.password, message: "Confirm password must match with the above password" },validator:checkPassword
+});
+     
+    self.handleSubmit = function(){
+        var errors = ko.validation.group(self);
+        if(errors().length > 0){
+            errors.showAllMessages();
+            return;
+        }
+        var payload = {
+            firstname : self.firstName(),
+        }
+        console.log(payload);
+    }
+};
+ko.validation.rules['areSame'] = {
+    getValue: function (o) {
+        return (typeof o === 'function' ? o() : o);
+    },
+    validator: function (val, otherField) {
+        return val === this.getValue(otherField);
+    },
+    message: 'The fields must have the same value'
+};
+$(document).ready(function () {
+    ko.validation.registerExtenders();
+    ko.applyBindings(new CreateAccountViewModel(),document.getElementById("Form2"));
 });

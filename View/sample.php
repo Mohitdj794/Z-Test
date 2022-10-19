@@ -9,17 +9,17 @@ if(empty($_SESSION['name'])){
 <head>
     <title>DashBoard</title>
     <link href="/Z-Test/assets/img/download.png" rel="icon">
-</head>
 <link href="../assets/css/style2.css" rel="stylesheet">
- <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
- <body>
- <script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+</head>
+<body>
+<script>
         history.pushState(null, null, document.URL);
 window.addEventListener('popstate', function () {
     history.pushState(null, null, document.URL);
 });
 
-    </script>
+</script>
 <div class="div1" id="div1">
 <header id="header1" class="header1">
       <h1 class="logo1"><a class="anc" href="sample.php">Z-TEST</a></h1>
@@ -33,8 +33,8 @@ window.addEventListener('popstate', function () {
   </div>
 <div class="container">
    <a href="update.php" class="btn1">Edit-Profile</a><br>
-   <a href="json.php" class="btn2">Test-History</a>
-   <a href="exam.php" class="btn3">Test</a>
+   <a href="json.php" class="btn2">Test-History</a><br>
+   <a href="exam.php" class="btn3">Start-Test</a>
 </div>
   <!-- <script src="./script4.js"></script> -->
 </body>

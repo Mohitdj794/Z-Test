@@ -2,11 +2,10 @@ body {
     font-family: Arial, Helvetica, sans-serif, sans-serif;
     margin: 0px !important;
     padding: 0px;
-    margin-bottom: 0px;
-    position:relative;
+    position:sticky;
 }
 .div1{
-    width:100%;
+    width:120%;
     height:80px;
     background-color: rgba(45, 53, 69, 0.907);
 }
@@ -45,14 +44,14 @@ body {
     text-decoration: none;
 }
 .logo2{
-    left: 770px;
+    left: 500px;
     position: relative;
     bottom: 50px;
     color: white;
 }
 
 .container .btn1{
-    background-color:  rgba(45, 53, 69, 0.907);
+  background-color:  rgba(45, 53, 69, 0.907);
   color: white;
   padding: 25px 70px ;
   text-align: center;
@@ -75,6 +74,7 @@ body {
   text-decoration: none;
   display: inline-block;
   left: 41%;
+  margin-top: 5%;
   position: relative;
   border-radius: 10px;
   font-size: 20px;
@@ -83,13 +83,13 @@ body {
     background-color:red;
 }
 .container .btn3{
-    background-color:  rgba(45, 53, 69, 0.907);
+  background-color:  rgba(45, 53, 69, 0.907);
   color: white;
   padding: 25px 70px ;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  left: 24%;
+  left: 42%;
   margin-top: 5%;
   position: relative;
   border-radius: 10px;
@@ -97,8 +97,4 @@ body {
 }
 .container .btn3:hover{
     background-color:red;
-}
-.btn3{
-    top: 135px;
-    position: relative;
 }
