@@ -6,12 +6,14 @@ function display1(data,i){
     self.option1 = ko.observable(data);
     self.values = ko.observable(`option${i+1}`);
 }
+
 function display2(data,i,localvalue){
     var self = this;
     self.option1 = ko.observable(data);
     self.values = ko.observable(`option${i+1}`);
     self.chosenItems = ko.observable(localvalue);
 }
+
 function display(data,options,i) {
     var self = this;
     self.option = ko.observableArray();
@@ -79,6 +81,6 @@ function display(data,options,i) {
         self.show(parseInt(localStorage.getItem("num")));
         }
         else
-        dpdata(show);
+        dpdata(show);  
     }
-export {questionOptionMV};
+ export {questionOptionMV};
