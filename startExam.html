@@ -17,19 +17,13 @@
 type = "text/javascript"></script>
 </head>
 <body>
-    <script>
-        history.pushState(null, null, document.URL);
-          window.addEventListener('popstate', function () {
-          history.pushState(null, null, document.URL);
-      });
-    
-        </script>
-        <!-- <script>
-        window.onbeforeunload = function() { 
-            
-            return true; 
-        };
-    </script> -->
+     <script>
+    history.pushState(null, null, document.URL);
+      window.addEventListener('popstate', function () {
+      history.pushState(null, null, document.URL);
+        });
+
+    </script>
   <div class="header">
     <h2>Z-Test</h2> 
   </div>
