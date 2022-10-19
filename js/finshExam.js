@@ -10,9 +10,15 @@ function renderFormSubmit(result){
         var confirmTimer = false;
         var $result='';
         e.preventDefault();
-        var num = parseInt(localStorage.getItem("num"));
-        var value = $(`input[type='radio'][name='option${num+1}']:checked`).val()
-        localStorage.setItem(`option${num+1}`,value);
+        if (Object.keys(result).length-1 == 1){
+            var value = $(`input[type='radio'][name='option${1}']:checked`).val()
+            localStorage.setItem(`option${1}`,value);
+        }else{
+            var num = parseInt(localStorage.getItem("num"));
+            var value = $(`input[type='radio'][name='option${num+1}']:checked`).val()
+            localStorage.setItem(`option${num+1}`,value);
+        }
+      
         function test(){
             return confirm("Confirm to submit");
         }
