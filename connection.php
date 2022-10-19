@@ -16,7 +16,7 @@ use Opis\Database\Database;
 use Opis\Database\Connection;
 define("_serverName", "localhost");
 define("_userName", "root");
-define("_password", "Ziffity@123");
+define("_password", "Vignesh@21");
 define("_database", "z_Test");
 /**
  * Class create a connection on construct

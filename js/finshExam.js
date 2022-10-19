@@ -40,7 +40,6 @@ function renderFormSubmit(result){
         console.log(response);
         if(response[0]["result"] == "pass"){ $result = "Congratulations" }
         else { $result = "Oops Better luck next time" }
-        // showResult = `<div class="showResultContainer"><h3>${$result}</h3> <h4>Your score ${response[0]["score"]}%</h4><a id="userPage" href="View/sample.php">Go to home</a></div>`;
         $(".container").hide();
         $(".showResult").show();
         function showResult(result,score) {
@@ -49,10 +48,8 @@ function renderFormSubmit(result){
             self.score = ko.observable("You score  "+score+"%");
         }
         ko.applyBindings(new showResult($result, response[0]["score"]),document.querySelector('.showResult'));
-
-        // $(".showResult").html(showResult);
-        // localStorage.clear();
-        // localStorage.setItem("exam",response["name"]+result[0]["TestTitle"]);
+        localStorage.clear();
+        localStorage.setItem("exam",response["name"]+result[0]["TestTitle"]);
         }
       })
     }
