@@ -1,5 +1,4 @@
 import { dataRender } from "./startExam.js";
-import {showSingleQuestion} from './nextPrevButton.js';
 import { renderFormSubmit } from "./finshExam.js";
 import { ajax } from "./ajax.js";
 var dataRenderExam = Aajax();
@@ -18,5 +17,5 @@ function Aajax(){
     return data;
 }   
 dataRender(dataRenderExam);
-showSingleQuestion(Object.keys(dataRenderExam).length-1);
 renderFormSubmit(dataRenderExam);
+$(".showResult").hide();

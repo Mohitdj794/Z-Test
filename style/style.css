@@ -28,9 +28,6 @@
     font-size: 30px;
     padding-left: 20px;
 }
-.container h3::after{
-    content: '  Assessment';
-}
 .container form{
     margin-left: 30px;  
 }
@@ -47,7 +44,7 @@
     margin-left: 30px;
 }
 .question input{
-    cursor: pointer;
+    cursor: pointer!important;
     margin-left: 20px;
     margin-top: 30px;  
     color: rgba(155, 155, 155, 0.478); 
@@ -87,7 +84,7 @@ input[type='radio']:checked:after {
 .question span{
     font-size: 27px;
 }
-.question label{
+ label{
     margin-left: 10px;
     font-size: 30px;
 }
@@ -113,7 +110,7 @@ input[type='radio']:checked:after {
 #submit{
     color: whitesmoke!important;
     position: absolute;
-    bottom: 20%;
+    bottom: 10%;
     right: 10%;
     padding: 20px 30px;
     background-color: rgb(79, 79, 79);

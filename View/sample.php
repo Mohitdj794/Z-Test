@@ -14,10 +14,10 @@ if(empty($_SESSION['name'])){
 </head>
  <body>
  <script>
-        history.pushState(null, null, document.URL);
-window.addEventListener('popstate', function () {
     history.pushState(null, null, document.URL);
-});
+      window.addEventListener('popstate', function () {
+      history.pushState(null, null, document.URL);
+  });
 
     </script>
 <div class="div1" id="div1">
