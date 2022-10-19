@@ -1,8 +1,4 @@
-let AddTest;
-function Add1(data){
-   return this.Insert=ko.observable(data);
 
-    }
 $(document).on("submit","#Add",function(e){
     e.preventDefault();
     var formdata = new FormData(this);
@@ -19,8 +15,12 @@ $(document).on("submit","#Add",function(e){
             Ajaxdata = response;
             console.log(response);
             if(response!=="inserted sucessfully"){
-                $("#error").html(response);
-                // ko.applyBindings(new Add1(response));
+
+                function Add1(data){
+                this.Insert=ko.observable(data);
+
+               }
+                ko.applyBindings(new Add1(response),document.getElementById("error"));
             }
             else{
                 window.location.href="/Z-Test/View/ViewCourse.php";
@@ -31,6 +31,5 @@ $(document).on("submit","#Add",function(e){
             console.log(error);
         }
     })
-    ko.applyBindings(new Add1(response));
 })
 

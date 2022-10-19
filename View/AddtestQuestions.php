@@ -47,14 +47,14 @@ include "connection.php";
   <div class="Ans">
    <label class="Ans1">Answer:</label></td>
    <input   data-bind="value:Answer,valueUpdate:'afterkeydown'" id="Ans2"type="text" name="Ans"  size="20"><br>
-   <span data-bind="text:Insert " id="error"></span>
+   
    </div>
    </div>
 
 <input type="submit" name="submit" class="sub">
 <input type="hidden" value="<?= $_GET["id"] ?>" name = "id">
 </form>
-
+<span data-bind="text:Insert " id="error"></span>
 <script>
 
 
@@ -114,7 +114,7 @@ ko.validation.rules['areSame'] = {
 
 $(document).ready(function () {
     ko.validation.registerExtenders();
-    ko.applyBindings(new CreateAccountViewModel());
+    ko.applyBindings(new CreateAccountViewModel(),document.getElementById("Add"));
 });
 
   </script>

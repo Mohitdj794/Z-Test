@@ -109,10 +109,15 @@ p,textarea{
 .Ans{
     padding:5px 3px 2px;
     margin-right: 55%;
-    margin-top: 20px;;
+    margin-top: 20px;
 }
 #error{
     color:red;
+    position: relative;
+    top:9%;
+    left:20%;
+    
+    bottom:20%;
 }
 #opt,#Ans2{
     padding:5px;
