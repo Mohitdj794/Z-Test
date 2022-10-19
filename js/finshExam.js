@@ -45,8 +45,8 @@ function renderFormSubmit(result){
         ko.applyBindings(new showResult($result, response[0]["score"]),document.querySelector('.showResult'));
 
         // $(".showResult").html(showResult);
-        localStorage.clear();
-        localStorage.setItem("exam",response["name"]+result[0]["TestTitle"]);
+        // localStorage.clear();
+        // localStorage.setItem("exam",response["name"]+result[0]["TestTitle"]);
         }
       })
     }
