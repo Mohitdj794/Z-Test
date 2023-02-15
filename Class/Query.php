@@ -45,8 +45,8 @@ class Query extends Conn
         $str = "";
         foreach ($object as $key => $row) {
             $str .= "<tr>
-                <td>{$row['TestTitle']}</td>
-                <td>{$row['TestDuration']} min</td>
+            <td><a class=\"delet\" style=\"text-decoration:none\" href=\"ViewTestDetails.php?testtitle={$row['TestTitle']}\">{$row['TestTitle']}</a></td>
+            <td>{$row['TestDuration']} min</td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
                 <td><a class=\"delete\" style=\"text-decoration:none\" href=\"Delete.php?id={$row['Test_id']}\">Delete</a></td>
@@ -294,8 +294,6 @@ class Query extends Conn
         }
     }
 
-
-
     /**
      * User return Exam data add fetch 
      * add data table name and array of data;
@@ -343,7 +341,29 @@ class Query extends Conn
         return $result;
     }
 
-
+    public function TestDetails()
+    {
+        $result = $this->con->from('examMaintain')
+        ->join(
+            'result', function ($join) {
+                 $join->on('examMaintain.ID', 'result.examMaintain_id');
+            }
+        )
+        ->select(
+            ['examMaintain.userName', 
+            'examMaintain.examTitle', 
+            'result.endTime', 
+            'result.date', 
+            'result.result', 
+            'result.score', 
+            ]
+        )
+        
+        // ->where('examMaintain.examTitle')->is($title)
+       
+        ->all();
+        return $result;
+    }
     
     /**
      * Following this function to
