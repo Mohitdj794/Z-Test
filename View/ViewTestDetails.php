@@ -20,7 +20,7 @@ session_start();
 
   
 </div>
-    <h2 class="testheading">Exam Details</h2>
+    <h2 class="testheading">Exam </h2>
 
 <div class="box">
  
@@ -41,11 +41,8 @@ session_start();
     require_once "../Class/Query.php";
    $objc = new Query();
    $title=$_GET['testtitle'];
-
-   $test= $objc->TestDetails();
-   if(isset($title)){
+   $test= $objc->TestDetails($title);
    foreach($test as $tests){?>
-   <?php if($tests->examTitle == $title){ ?>
   <tr class="item_row">
         <td><?php echo ++$total; ?></td>
         <td><?php echo $tests->userName; ?></td>
@@ -54,20 +51,9 @@ session_start();
         <td> <?php echo $tests->result; ?></td>
         <td> <?php echo $tests->score; ?></td>
   </tr>
-<?php }
-}}
-else{  foreach($test as $tests){?>
- <tr class="item_row">
-       <td><?php echo ++$total; ?></td>
-       <td><?php echo $tests->userName; ?></td>
-       <td> <?php echo $tests->examTitle; ?></td>
-       <td> <?php echo date("d-m-Y", strtotime($tests->date))." / ".date("g:i a", strtotime($tests->endTime)); ?></td>
-       <td> <?php echo $tests->result; ?></td>
-       <td> <?php echo $tests->score; ?></td>
- </tr>
-<?php 
+<?php
 }
-} ?>
+ ?>
 </tbody>
 </table>
 </div>
