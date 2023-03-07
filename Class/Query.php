@@ -348,7 +348,6 @@ class Query extends Conn
 
     public function TestDetails($title = null)
     {
-        // var_dump($title);die("test1");
 
         /**
          * @var \Opis\Database\SQL\Query $query 
@@ -373,29 +372,10 @@ class Query extends Conn
             'result.score', 
             ]
         );
-        // var_dump($query);die();
         return $query->all();
     }
-    // public function TestDetails1()
-    // {
-    //     $result = $this->con->from('examMaintain')
-    //     ->join(
-    //         'result', function ($join) {
-    //              $join->on('examMaintain.ID', 'result.examMaintain_id');
-    //         }
-    //     )
-    //     ->select(
-    //         ['examMaintain.userName', 
-    //         'examMaintain.examTitle', 
-    //         'result.endTime', 
-    //         'result.date', 
-    //         'result.result', 
-    //         'result.score', 
-    //         ]
-    //     )       
-    //     ->all();
-    //     return $result;
-    // }
+
+
     
     
     /**
