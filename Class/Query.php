@@ -45,7 +45,7 @@ class Query extends Conn
         $str = "";
         foreach ($object as $key => $row) {
             $str .= "<tr>
-                <td>{$row['TestTitle']}</td>
+                <td><a class=\"delet\" style=\"text-decoration:none\" href=\"ViewTestDetails.php?testtitle={$row['TestTitle']}\">{$row['TestTitle']}</a></td>
                 <td>{$row['TestDuration']} min</td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"AddtestQuestions.php?id={$row['Test_id']}\">Add Questions</a></td>
                 <td><a class=\"delet\" style=\"text-decoration:none\" href=\"/Z-Test/View/view.php?id={$row['Test_id']}\">View Test</a></td>
@@ -124,7 +124,8 @@ class Query extends Conn
 
            
             foreach ($arr as $key1=> $val) {
-                if($val==$Ans){
+    
+                if(($val==$Ans)&&($Ans!=="")){
                     $result1 = $this->con->insert(array(
                         'Options' => "$exam",
                         'Answer' => "$Ans",
@@ -160,7 +161,7 @@ class Query extends Conn
         $i = 0;
         $str1 = "";
         foreach ($object as $key => $v) {
-            $str1 = "<h1>{$v['TestTitle']}</h1> <br>";
+            $str1 = "E"."<h1>{$v['TestTitle']}</h1> <br>";
         }
         echo $str1;
         foreach ($object as $key => $row) {
@@ -199,7 +200,7 @@ class Query extends Conn
             $var = json_decode($row['Options'], true);
             $str = "";
             echo "<p><label>Question</label></p>
-                       <textarea  name='Question' class='Que' rows='10' cols='70'>{$row['Question']}</textarea> <br>
+                       <textarea  name='Question' class='Que' rows='10' cols='70' required>{$row['Question']}</textarea> <br>
                          ";
             echo "<p>Options</p>";
             $count = 1;
@@ -208,7 +209,7 @@ class Query extends Conn
                 $count++;
             }
             echo $str . "<br>";
-            echo "<p>Answer</p><input type='text' name='Answer' value='{$row['Answer']}'>";
+            echo "<p>Answer</p><input type='text' name='Answer' value='{$row['Answer']}' required><br>";
         }
     }
 
@@ -222,16 +223,15 @@ class Query extends Conn
      * 
      * @return void
      */
-    public function updateTest($submit, $Question, $Answer, $id)
+    public function updateTest($Question, $Answer, $id)
     {
-        if (isset($submit)) {
             $result = $this->con->update('Test_Question')
                 ->where('Question_id')->is($id)
                 ->set(array(
                     'Question' => "$Question"
                 ));
             $obj = $_REQUEST;
-            print_r($obj);
+            
             $Option = [];
             foreach ($obj as $key => $value) {
                 if (substr($key, 0, 6) == "Option") {
@@ -239,7 +239,7 @@ class Query extends Conn
                 }
             }
             $r = json_encode($Option);
-            print_r($r);
+           
             $x = "";
             $result3 = $this->con->from('Test_Question')
                 ->where('Question_id')->is($id)
@@ -248,19 +248,24 @@ class Query extends Conn
             foreach ($result3 as $user) {
                 $x = $user->Test_id;
             }
-            echo $x;
+              
+            foreach ($Option as $key => $value) {
+            
+            if($value==$Answer){
             $result1 = $this->con->update('Test_Result')
                 ->where('Question_id')->is($id)
                 ->set(array(
                     'Options'  => "$r",
                     'Answer' =>  "$Answer"
                 ));
-            if ($result1 == true); {
-                header("LOCATION:view.php?id={$x}");
+
+                // header("LOCATION:view.php?id={$x}");
+                echo $x;
                 die();
             }
-            echo "error";
+        
         }
+        echo "The Answer is not matched to the Options";
     }
 
     /**
@@ -293,8 +298,6 @@ class Query extends Conn
             return $str;
         }
     }
-
-
 
     /**
      * User return Exam data add fetch 
@@ -343,7 +346,37 @@ class Query extends Conn
         return $result;
     }
 
+    public function TestDetails($title = null)
+    {
 
+        /**
+         * @var \Opis\Database\SQL\Query $query 
+         */
+        $query = $this->con->from('examMaintain')
+        ->join(
+            'result', function ($join) {
+                 $join->on('examMaintain.ID', 'result.examMaintain_id');
+            }
+        ); 
+        if($title !== null) {
+        $query = $query->where('examMaintain.examTitle')->is($title);
+        }
+
+        $query = $query
+        ->select(
+            ['examMaintain.userName', 
+            'examMaintain.examTitle', 
+            'result.endTime', 
+            'result.date', 
+            'result.result', 
+            'result.score', 
+            ]
+        );
+        return $query->all();
+    }
+
+
+    
     
     /**
      * Following this function to
